@@ -32,4 +32,17 @@ public class DeckTest {
         assertEquals(52, deck.getCards().size());
     }
 
+    // Assegurar que després de robar una carta, la mida de la baralla disminueix en 1
+    @Test
+    void testDrawCardReducesDeckSize() 
+    {
+        Deck deck = new Deck();
+        int initialSize = deck.getCards().size();
+
+        Card drawn = deck.drawCard();
+
+        assertNotNull(drawn);
+        assertEquals(initialSize - 1, deck.getCards().size());
+    }
+
 }
