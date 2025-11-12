@@ -26,8 +26,13 @@ public class Deck {
         return cards;
     }
 
-    public Card drawCard() {
-        
+    public Card drawCard() 
+    {
+        if (!cards.isEmpty())
+        {
+            return cards.remove(0);
+        }
+        return null;
     }
     
 }
