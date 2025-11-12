@@ -14,4 +14,6 @@ class CardTest {
         assertEquals("A", card.getRank());
     }
 
+    
+
 }
