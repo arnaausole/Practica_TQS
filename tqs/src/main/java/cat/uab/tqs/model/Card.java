@@ -17,4 +17,9 @@ public class Card
     public String getRank() {
         return rank;
     }
+
+    public Integer getNumericValue() {
+
+        
+    }
 }
