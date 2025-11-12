@@ -24,4 +24,12 @@ public class DeckTest {
         }
     }
 
+    // Assegurar que la baralla comença amb 52 cartes
+    @Test
+    void testDeckStartsWith52Cards() 
+    {
+        Deck deck = new Deck();
+        assertEquals(52, deck.getCards().size());
+    }
+
 }
