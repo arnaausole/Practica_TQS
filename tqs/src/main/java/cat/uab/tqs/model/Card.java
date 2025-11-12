@@ -14,5 +14,6 @@ public class Card
     }
 
     public String getRank() {
-        
+
     }
+}
