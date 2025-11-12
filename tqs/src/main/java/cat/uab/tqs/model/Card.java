@@ -20,6 +20,10 @@ public class Card
 
     public Integer getNumericValue() {
 
-        
+        return switch (rank) {
+            case "J", "Q", "K" -> 10;
+            case "A" -> 11; // For now, Ace = 11
+            default -> Integer.parseInt(rank);
+        };
     }
 }
