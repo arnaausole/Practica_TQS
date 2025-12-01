@@ -1,7 +1,4 @@
-package cat.uab.tqs.model;
-
-public class Card 
-{
+public class Card {
     private String suit;
     private String rank;
 
@@ -19,10 +16,9 @@ public class Card
     }
 
     public Integer getNumericValue() {
-
         return switch (rank) {
             case "J", "Q", "K" -> 10;
-            case "A" -> 11; // For now, Ace = 11
+            case "A" -> 11;
             default -> Integer.parseInt(rank);
         };
     }
