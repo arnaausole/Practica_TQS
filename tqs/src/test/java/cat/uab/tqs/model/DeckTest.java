@@ -6,43 +6,62 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DeckTest {
 
     @Test
-    void testCreateDeckCorrectly() 
-    {
+    void testDeckConstructor() {
         Deck deck = new Deck();
-        
-        for(int i = 0; i < deck.getCards().size(); i++) 
-        {
-            Card card = deck.getCards().get(i);
-            
-            for(int j = i + 1; j < deck.getCards().size(); j++) 
-            {
-                Card otherCard = deck.getCards().get(j);
-                
-                // Assegurar que no hi ha cartes duplicades
-                assertFalse(card.getRank().equals(otherCard.getRank()) && card.getSuit().equals(otherCard.getSuit()));
-            }
-        }
+
+        // Cas 1: mida correcta
+        assertEquals(52, deck.size());
+
+        // Cas 2: no ha d'estar buida
+        assertFalse(deck.isEmpty());
+
+        // Cas 3: conté cartes bàsiques
+        assertTrue(deck.contains(new Card("Hearts", "A")));
+        assertTrue(deck.contains(new Card("Clubs", "10")));
+        assertTrue(deck.contains(new Card("Spades", "2")));
+
+        // Cas 4: primera carta és la correcta (per ordre de creació)
+        Card first = deck.getCardAt(0);
+        assertEquals("Hearts", first.getSuit());
+        assertEquals("2", first.getRank());
     }
 
-    // Assegurar que la baralla comença amb 52 cartes
     @Test
-    void testDeckStartsWith52Cards() 
-    {
+    void testGetCards() {
         Deck deck = new Deck();
+
+        // Cas 1: mai ha de ser null
+        assertNotNull(deck.getCards());
+
+        // Cas 2: mida correcta
         assertEquals(52, deck.getCards().size());
+
+        // Cas 3: cartes vàlides
+        Card sample = deck.getCardAt(10);
+        assertNotNull(sample.getSuit());
+        assertNotNull(sample.getRank());
     }
 
-    // Assegurar que després de robar una carta, la mida de la baralla disminueix en 1
     @Test
-    void testDrawCardReducesDeckSize() 
-    {
+    void testDrawCard() {
         Deck deck = new Deck();
-        int initialSize = deck.getCards().size();
+        int initialSize = deck.size();
 
-        Card drawn = deck.drawCard();
+        // Cas 1: retorna una carta
+        Card c = deck.drawCard();
+        assertNotNull(c);
 
-        assertNotNull(drawn);
-        assertEquals(initialSize - 1, deck.getCards().size());
+        // Cas 2: disminueix la mida
+        assertEquals(initialSize - 1, deck.size());
+
+        // Cas 3: la carta robada ja no és a la baralla
+        assertFalse(deck.contains(c));
+
+        // Cas 4: quan la baralla és buida retorna null
+        Deck emptyDeck = new Deck();
+        for (int i = 0; i < 52; i++)
+            emptyDeck.drawCard();
+
+        assertNull(emptyDeck.drawCard());
     }
-
 }
