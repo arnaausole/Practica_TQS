@@ -10,15 +10,19 @@ public class DeckTest {
         Deck deck = new Deck();
 
         // Cas 1: mida correcta
+        assertNotEquals(-1, deck.size());
+        assertNotEquals(53, deck.size());
         assertEquals(52, deck.size());
 
         // Cas 2: no ha d'estar buida
         assertFalse(deck.isEmpty());
 
-        // Cas 3: conté cartes bàsiques
+        // Cas 3: conté cartes bàsiques i no conté cartes inexistents
         assertTrue(deck.contains(new Card("Hearts", "A")));
         assertTrue(deck.contains(new Card("Clubs", "10")));
         assertTrue(deck.contains(new Card("Spades", "2")));
+        assertFalse(deck.contains(new Card("Joker", "5")));
+        assertFalse(deck.contains(new Card("Diamonds", "15")));
 
         // Cas 4: primera carta és la correcta (per ordre de creació)
         Card first = deck.getCardAt(0);
@@ -59,9 +63,10 @@ public class DeckTest {
 
         // Cas 4: quan la baralla és buida retorna null
         Deck emptyDeck = new Deck();
-        for (int i = 0; i < 52; i++)
+        while (emptyDeck.size() > 0)
             emptyDeck.drawCard();
 
+        assertTrue(emptyDeck.isEmpty());
         assertNull(emptyDeck.drawCard());
     }
 }
