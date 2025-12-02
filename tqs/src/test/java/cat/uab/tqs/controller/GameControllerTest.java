@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import cat.uab.tqs.mocks.MockGameView;
-import cat.uab.tqs.model.Deck;
+import cat.uab.tqs.model.*;
 
 public class GameControllerTest {
 
@@ -50,18 +50,91 @@ public class GameControllerTest {
 
         controller.startGame();
 
-        controller.playerStand();
+        // Cas 1: el jugador es planta
 
-        // el jugador ha destar en mode stand
+        controller.playerStand();
         assertTrue(controller.getPlayer().isStanding());
 
-        // el dealer ha dhaver jugat (>=17)
+        // Cas 2: el dealer ha jugat i el seu valor és >= 17
         assertTrue(controller.getDealer().getHand().getValue() >= 17);
 
     
         assertTrue(view.lastPlayerScore > 0);
         assertTrue(view.lastDealerScore > 0);
     }
+
+    @Test
+    void testDetermineWinner() {
+
+        // valors limit/frontera
+
+        // Cas 1: Player busts --> Dealer guanya
+
+        controller.startGame();
+        controller.getPlayer().getHand().addCard(new Card("Hearts", "K"));
+        controller.getPlayer().getHand().addCard(new Card("Hearts", "Q"));
+        controller.getPlayer().getHand().addCard(new Card("Hearts", "J")); // segur que passa de 21
+
+        controller.determineWinner();
+        assertEquals("Dealer wins.", view.lastMessage);
+
+
+        // Cas 2: Dealer busts --> Player guanya
+        controller.startGame();
+        controller.getDealer().getHand().addCard(new Card("Hearts", "K"));
+        controller.getDealer().getHand().addCard(new Card("Hearts", "Q"));
+        controller.getDealer().getHand().addCard(new Card("Hearts", "J")); // passa de 21
+
+        controller.determineWinner();
+        assertEquals("Player wins.", view.lastMessage);
+
+
+        // Cas 3: Player > Dealer --> Player guanya
+
+        controller.startGame();
+
+        // li donem al player una ma forta hardcodeado
+        controller.getPlayer().getHand().addCard(new Card("Hearts", "10"));
+        controller.getPlayer().getHand().addCard(new Card("Clubs", "9"));
+
+        // al dealer una pitjor tambe hardcodeado
+        controller.getDealer().getHand().addCard(new Card("Spades", "8"));
+        controller.getDealer().getHand().addCard(new Card("Diamonds", "8"));
+
+        controller.determineWinner();
+        assertEquals("Player wins.", view.lastMessage);
+
+
+        // Cas 4: Dealer > Player --> Dealer guanya
+
+        controller.startGame();
+
+        controller.getPlayer().getHand().addCard(new Card("Hearts", "8"));
+        controller.getPlayer().getHand().addCard(new Card("Clubs", "8")); // 16
+
+        controller.getDealer().getHand().addCard(new Card("Spades", "10"));
+        controller.getDealer().getHand().addCard(new Card("Diamonds", "9")); // 19
+
+        controller.determineWinner();
+        assertEquals("Dealer wins.", view.lastMessage);
+
+
+    
+        // Cas 5: Empat
+        
+        controller.startGame();
+
+        controller.getPlayer().getHand().addCard(new Card("Hearts", "10"));
+        controller.getPlayer().getHand().addCard(new Card("Clubs", "9")); // 19
+
+        controller.getDealer().getHand().addCard(new Card("Spades", "10"));
+        controller.getDealer().getHand().addCard(new Card("Diamonds", "9")); // 19
+
+        controller.determineWinner();
+        assertEquals("Tie.", view.lastMessage);
+    }
+
+
 
 
     
