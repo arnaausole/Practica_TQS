@@ -50,6 +50,11 @@ public class GameController {
     }
 
     public void playerStand() {
+        
+        player.stand();
+        dealer.play(deck);
+        view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());
+
     }
 
     public void determineWinner() {
