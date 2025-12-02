@@ -1,8 +1,8 @@
 package cat.uab.tqs.controller;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import cat.uab.tqs.mocks.MockGameView;
@@ -10,11 +10,20 @@ import cat.uab.tqs.model.Deck;
 
 public class GameControllerTest {
 
+    MockGameView view;
+    Deck deck;
+    GameController controller;
+
+    @BeforeEach
+    void setUp()
+    {
+        view = new MockGameView();
+        deck = new Deck();
+        controller = new GameController(view, deck);
+    }
+
     @Test
     void testStartGame() {
-        MockGameView view = new MockGameView();
-        Deck deck = new Deck();
-        GameController controller = new GameController(view, deck);
 
         controller.startGame();
 
@@ -23,5 +32,18 @@ public class GameControllerTest {
         assertTrue(view.lastPlayerScore > 0);
         assertTrue(view.lastDealerScore > 0);
     }
+
+    @Test
+    void testPlayerHit() {
+        
+        controller.startGame();
+        int before = controller.getPlayer().getHand().getCards().size();
+
+        controller.playerHit();
+
+        assertEquals(before + 1, controller.getPlayer().getHand().getCards().size());
+        assertNotNull(view.lastShownCard);
+    }
+
     
 }
