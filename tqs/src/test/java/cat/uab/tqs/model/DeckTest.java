@@ -70,11 +70,22 @@ public class DeckTest {
         assertNull(emptyDeck.drawCard());
     }
 
-    // Remenar la baralla, de moment sense mock
+    @Test 
+    void setShufflerRandom() {
+        Deck deck = new Deck();
+        ShuffleRandom shuffler = new MockShuffleRandom();
+        deck.setShufflerRandom(shuffler);
+        assertEquals(shuffler, deck.getShufflerRandom());
+    }
+    
     @Test
     void testShuffle() {
         Deck deck = new Deck();
         Deck originalDeck = new Deck();
+
+        ShuffleRandom shuffler = new MockShuffleRandom();
+        deck.setShufflerRandom(shuffler);
+        
         deck.shuffle();
 
         assertNotEquals(originalDeck, deck);
