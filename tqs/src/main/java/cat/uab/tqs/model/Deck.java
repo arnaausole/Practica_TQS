@@ -6,6 +6,7 @@ import java.util.List;
 public class Deck {
 
     private List<Card> cards;
+    private ShuffleRandom shuffler;
 
     public Deck() {
         cards = new ArrayList<>();
@@ -55,6 +56,11 @@ public class Deck {
         return null;
     }
 
+    public void setShufflerRandom(ShuffleRandom shuffler) {
+        // This method is to set a custom shuffler for testing purposes
+        this.shuffler = shuffler;
+    }
+    
     public void shuffle() {
         java.util.Collections.shuffle(cards);
     }
