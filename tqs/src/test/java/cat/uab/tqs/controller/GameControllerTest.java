@@ -146,8 +146,5 @@ public class GameControllerTest {
         assertEquals("Tie.", view.lastMessage);
     }
 
-
-
-
     
 }
