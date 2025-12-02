@@ -93,6 +93,10 @@ public class GameControllerTest {
 
         controller.startGame();
 
+        // fem clear de les baralles fetes per startGame, per posarho nosaltres manualment
+        controller.getPlayer().reset();
+        controller.getDealer().reset();
+
         // li donem al player una ma forta hardcodeado
         controller.getPlayer().getHand().addCard(new Card("Hearts", "10"));
         controller.getPlayer().getHand().addCard(new Card("Clubs", "9"));
@@ -109,6 +113,10 @@ public class GameControllerTest {
 
         controller.startGame();
 
+        // fem clear de les baralles fetes per startGame, per posarho nosaltres manualment
+        controller.getPlayer().reset();
+        controller.getDealer().reset();
+
         controller.getPlayer().getHand().addCard(new Card("Hearts", "8"));
         controller.getPlayer().getHand().addCard(new Card("Clubs", "8")); // 16
 
@@ -121,8 +129,12 @@ public class GameControllerTest {
 
     
         // Cas 5: Empat
-        
+
         controller.startGame();
+
+        // fem clear de les baralles fetes per startGame, per posarho nosaltres manualment
+        controller.getPlayer().reset();
+        controller.getDealer().reset();
 
         controller.getPlayer().getHand().addCard(new Card("Hearts", "10"));
         controller.getPlayer().getHand().addCard(new Card("Clubs", "9")); // 19

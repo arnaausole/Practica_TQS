@@ -27,6 +27,9 @@ public class GameController {
 
     public void startGame() {
 
+        player.reset();
+        dealer.reset();
+
         player.getHand().addCard(deck.drawCard());
         player.getHand().addCard(deck.drawCard());
 
