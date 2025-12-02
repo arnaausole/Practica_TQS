@@ -69,4 +69,14 @@ public class DeckTest {
         assertTrue(emptyDeck.isEmpty());
         assertNull(emptyDeck.drawCard());
     }
+
+    // Remenar la baralla, de moment sense mock
+    @Test
+    void testShuffle() {
+        Deck deck = new Deck();
+        Deck originalDeck = new Deck();
+        deck.shuffle();
+
+        assertNotEquals(originalDeck, deck);
+    }
 }
