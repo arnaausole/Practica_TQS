@@ -1,8 +1,9 @@
 package cat.uab.tqs.mocks;
 
 import cat.uab.tqs.model.*;
+import java.util.List;
 
-public interface MockShuffleRandom implements Shuffler {
+public class MockShuffleRandom implements Shuffler {
 
     List<Card> predefinedOrder = List.of(
         new Card("Hearts", "A"),
@@ -18,3 +19,4 @@ public interface MockShuffleRandom implements Shuffler {
         cards.addAll(predefinedOrder);
     }
 }
+
