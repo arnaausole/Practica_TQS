@@ -2,8 +2,8 @@ package cat.uab.tqs.model;
 
 public class Player {
 
-    private Hand hand;
-    private boolean standing;
+    private Hand hand; // baralla
+    private boolean standing; // es planta (no agafa mes cartes)
 
     public Player() {
         hand = new Hand();
