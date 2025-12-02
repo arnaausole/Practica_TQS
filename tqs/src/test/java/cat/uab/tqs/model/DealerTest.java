@@ -12,6 +12,8 @@ class DealerTest {
     @Test
     void testPlay() {
     
+        // valor frontera: limit superior
+
         // CAS 1: Dealer amb 17 o més --> no ha de robar cartes
         Deck deck1 = new Deck();
         Dealer dealer1 = new Dealer();
@@ -23,6 +25,8 @@ class DealerTest {
         dealer1.play(deck1);
         assertEquals(17, dealer1.getHand().getValue());
         assertEquals(initialSize1, deck1.size()); // no ha robat
+
+        // valor frontera: limit inferior
 
         // CAS 2: Dealer amb 16 --> ha de robar com a minim una carta
         Deck deck2 = new Deck();
@@ -52,9 +56,9 @@ class DealerTest {
         assertTrue(dealer3.getHand().getValue() >= 17);
         assertTrue(deck3.size() < sizeBefore3);  // ha robat diverses vegades
 
-        // CAS 4: Asos (path coverage)
+        // Asos (particio equivalent + path coverage)
         
-        // Dealer té A + 5 → pot ser 16 → ha de robar
+        // CAS 4: Dealer té A + 5 --> pot ser 16 --> ha de robar
         Deck deck4 = new Deck();
         Dealer dealer4 = new Dealer();
 
@@ -67,7 +71,7 @@ class DealerTest {
         assertTrue(dealer4.getHand().getValue() >= 17);
         assertTrue(deck4.size() < sizeBefore4);
 
-        // Dealer té A + 6 --> 17 exacte → no ha de robar
+        // CAS 5: Dealer té A + 6 --> 17 exacte --> no ha de robar
 
         Deck deck5 = new Deck();
         Dealer dealer5 = new Dealer();
@@ -80,5 +84,24 @@ class DealerTest {
 
         assertEquals(17, dealer5.getHand().getValue());
         assertEquals(sizeBefore5, deck5.size());  // no ha robat
+
+        // CAS 6: baralla buida --> no roba res ni canvia res
+
+        Deck emptyDeck = new Deck();
+        Dealer dealer6 = new Dealer();
+
+        // Buidem la baralla
+        for (int i = 0; i < 52; i++) {
+            emptyDeck.drawCard();
+        }
+
+        dealer6.getHand().addCard(new Card("Clubs", "8"));
+        dealer6.getHand().addCard(new Card("Diamonds", "7")); // total = 15
+
+        int sizeBefore6 = emptyDeck.size();
+        dealer6.play(emptyDeck);
+
+        assertEquals(15, dealer6.getHand().getValue());  // no canvia
+        assertEquals(sizeBefore6, emptyDeck.size());     // no roba res
     }
 }
