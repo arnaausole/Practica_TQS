@@ -13,6 +13,12 @@ public class Dealer {
     }
 
     public void play(Deck deck) {
+
+        while (hand.getValue() < 17 && !deck.isEmpty()) {
+            
+            Card c = deck.drawCard();
+            hand.addCard(c);
+        }
         
     }
 }
