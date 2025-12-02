@@ -1,11 +1,20 @@
-package cat.uab.tqs.model;
+package cat.uab.tqs.mocks;
 
-import java.util.Collections;
-import java.util.List;
+import cat.uab.tqs.model.*;
 
-public class ShuffleRandom implements Shuffler {
+public interface MockShuffleRandom implements Shuffler {
+
+    List<Card> predefinedOrder = List.of(
+        new Card("Hearts", "A"),
+        new Card("Diamonds", "K"),
+        new Card("Clubs", "Q"),
+        new Card("Spades", "J")
+        // Add more cards as needed for testing
+    );
+
     @Override
     public void shuffle(List<Card> cards) {
-        Collections.shuffle(cards);
+        cards.clear();
+        cards.addAll(predefinedOrder);
+    }
 }
-
