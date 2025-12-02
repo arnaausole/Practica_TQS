@@ -38,6 +38,15 @@ public class GameController {
     }
 
     public void playerHit() {
+
+        Card c = deck.drawCard();
+        player.hit(c);
+        view.showCard(player, c);
+
+        if (player.getHand().isBust()) {
+            view.showMessage("Player busts.");
+        }
+
     }
 
     public void playerStand() {

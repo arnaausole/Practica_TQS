@@ -45,5 +45,24 @@ public class GameControllerTest {
         assertNotNull(view.lastShownCard);
     }
 
+    @Test
+    void testPlayerStand() {
+
+        controller.startGame();
+
+        controller.playerStand();
+
+        // el jugador ha destar en mode stand
+        assertTrue(controller.getPlayer().isStanding());
+
+        // el dealer ha dhaver jugat (>=17)
+        assertTrue(controller.getDealer().getHand().getValue() >= 17);
+
+    
+        assertTrue(view.lastPlayerScore > 0);
+        assertTrue(view.lastDealerScore > 0);
+    }
+
+
     
 }
