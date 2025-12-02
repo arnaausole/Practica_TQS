@@ -54,4 +54,8 @@ public class Deck {
         }
         return null;
     }
+
+    public void shuffle() {
+        java.util.Collections.shuffle(cards);
+    }
 }
