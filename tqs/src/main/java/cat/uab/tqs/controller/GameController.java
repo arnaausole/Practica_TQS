@@ -26,6 +26,15 @@ public class GameController {
     }
 
     public void startGame() {
+
+        player.getHand().addCard(deck.drawCard());
+        player.getHand().addCard(deck.drawCard());
+
+        dealer.getHand().addCard(deck.drawCard());
+        dealer.getHand().addCard(deck.drawCard());
+
+        view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());
+
     }
 
     public void playerHit() {
