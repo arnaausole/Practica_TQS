@@ -60,6 +60,10 @@ public class Deck {
         // This method is to set a custom shuffler for testing purposes
         this.shuffler = shuffler;
     }
+
+    public Shuffler getShufflerRandom() {
+    	return this.shuffler;
+    }
     
     public void shuffle() {
         shuffler.shuffle(cards);
