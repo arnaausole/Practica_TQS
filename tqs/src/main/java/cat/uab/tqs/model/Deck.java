@@ -62,6 +62,6 @@ public class Deck {
     }
     
     public void shuffle() {
-        java.util.Collections.shuffle(cards);
+        shuffler.shuffle(cards);
     }
 }
