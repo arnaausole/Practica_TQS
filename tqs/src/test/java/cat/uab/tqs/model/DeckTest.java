@@ -1,6 +1,7 @@
 package cat.uab.tqs.model;
 
 import org.junit.jupiter.api.Test;
+import cat.uab.tqs.mocks.MockShuffleRandom;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DeckTest {
@@ -71,9 +72,9 @@ public class DeckTest {
     }
 
     @Test 
-    void setShufflerRandom() {
+    void testSetShufflerRandom() {
         Deck deck = new Deck();
-        ShuffleRandom shuffler = new MockShuffleRandom();
+        ShuffleRandom shuffler = new ShuffleRandom();
         deck.setShufflerRandom(shuffler);
         assertEquals(shuffler, deck.getShufflerRandom());
     }
@@ -83,7 +84,7 @@ public class DeckTest {
         Deck deck = new Deck();
         Deck originalDeck = new Deck();
 
-        ShuffleRandom shuffler = new MockShuffleRandom();
+        Shuffler shuffler = new MockShuffleRandom();
         deck.setShufflerRandom(shuffler);
         
         deck.shuffle();
