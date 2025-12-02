@@ -50,7 +50,7 @@ public class GameController {
     }
 
     public void playerStand() {
-        
+
         player.stand();
         dealer.play(deck);
         view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());
@@ -58,5 +58,25 @@ public class GameController {
     }
 
     public void determineWinner() {
+
+        int p = player.getHand().getValue();
+        int d = dealer.getHand().getValue();
+
+        if (player.getHand().isBust()) {
+            view.showMessage("Dealer wins.");
+        }
+        else if (dealer.getHand().isBust()) {
+            view.showMessage("Player wins.");
+        }
+        else if (p > d) {
+            view.showMessage("Player wins.");
+        }
+        else if (p < d) {
+            view.showMessage("Dealer wins.");
+        }
+        else {
+            view.showMessage("Tie.");
+        }
+
     }
 }
