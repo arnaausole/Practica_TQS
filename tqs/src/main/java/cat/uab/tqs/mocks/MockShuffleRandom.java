@@ -10,7 +10,7 @@ public class MockShuffleRandom implements Shuffler {
         new Card("Diamonds", "K"),
         new Card("Clubs", "Q"),
         new Card("Spades", "J")
-        // Add more cards as needed for testing
+        // afegirem mes per testejar si cal
     );
 
     @Override
