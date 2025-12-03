@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-
 public class HandTest {
 
     @Test
@@ -26,120 +25,134 @@ public class HandTest {
         assertEquals("A", hand.getCards().get(1).getRank());
     }
 
-
     @Test
-    void testGetValue() {
-        Hand hand = new Hand();
+    void testGetValue_Pairwise() {
+        Hand hand;
 
-        // casos simples sense As
+        // Pairwise testing sobre 3 factors:
+        // F1: nombre de asos (0, 1, +2)
+        // F2: suma cartes NO asos (baixa, mitjana, alta)
+        // F3: nombre de cartes (1-2, 3, +4)
+
+        // CAS 1: 0 asos, baixa, 1-2
+        hand = new Hand();
+        hand.addCard(new Card("Hearts", "5"));
+        assertEquals(5, hand.getValue());
+
+        // CAS 2: 0 asos, mitjana, 3
+        hand = new Hand();
         hand.addCard(new Card("Hearts", "10"));
         hand.addCard(new Card("Clubs", "9"));
-        assertEquals(19, hand.getValue());
+        hand.addCard(new Card("Spades", "2"));
+        assertEquals(21, hand.getValue());
 
-        // Reset per als següents casos
+        // CAS 3: 0 asos, alta, 4+
         hand = new Hand();
+        hand.addCard(new Card("Hearts", "10"));
+        hand.addCard(new Card("Clubs", "10"));
+        hand.addCard(new Card("Diamonds", "5"));
+        hand.addCard(new Card("Spades", "2"));
+        assertEquals(27, hand.getValue());
 
-        // Tractament de l'As com 11 si no fa bust
+        // CAS 4: 1 as, baixa, 1-2
+        hand = new Hand();
+        hand.addCard(new Card("Hearts", "A"));
+        hand.addCard(new Card("Clubs", "5"));
+        assertEquals(16, hand.getValue());
+
+        // CAS 5: 1 as, mitjana, 3
+        hand = new Hand();
         hand.addCard(new Card("Hearts", "A"));
         hand.addCard(new Card("Clubs", "9"));
-        assertEquals(20, hand.getValue());   // 11 + 9
+        hand.addCard(new Card("Spades", "9"));
+        assertEquals(19, hand.getValue());
 
-        // Reset
+        // CAS 6: 1 as, alta, 4+
         hand = new Hand();
-
-        // Tractament de l'As com 1 si fa bust
         hand.addCard(new Card("Hearts", "A"));
-        hand.addCard(new Card("Clubs", "K"));
-        hand.addCard(new Card("Diamonds", "9"));
-        assertEquals(20, hand.getValue());  // 1 + 10 + 9
+        hand.addCard(new Card("Spades", "K"));
+        hand.addCard(new Card("Clubs", "Q"));
+        hand.addCard(new Card("Diamonds", "J"));
+        assertEquals(31, hand.getValue());
 
-        // Reset
+        // CAS 7: 2+ asos, baixa, 3
         hand = new Hand();
-
-        // Múltiples As
         hand.addCard(new Card("Hearts", "A"));
         hand.addCard(new Card("Clubs", "A"));
         hand.addCard(new Card("Spades", "9"));
-        assertEquals(21, hand.getValue()); // 11 + 1 + 9
+        assertEquals(21, hand.getValue());
 
-        // Reset
+        // CAS 8: 2+ asos, mitjana, 4+
         hand = new Hand();
+        hand.addCard(new Card("Hearts", "A"));
+        hand.addCard(new Card("Clubs", "A"));
+        hand.addCard(new Card("Spades", "10"));
+        hand.addCard(new Card("Diamonds", "9"));
+        assertEquals(21, hand.getValue());
 
-        // Mà buida
+        // CAS 9: 2+ asos, alta, 1-2
+        hand = new Hand();
+        hand.addCard(new Card("Hearts", "A"));
+        hand.addCard(new Card("Clubs", "A"));
+        hand.addCard(new Card("Spades", "K"));
+        assertEquals(12, hand.getValue());
+
+        // Cas extra: mà buida
+        hand = new Hand();
         assertEquals(0, hand.getValue());
-
-        // Reset
-        hand = new Hand();
-
-        // Moltes cartes (loop testing)
-        hand.addCard(new Card("Hearts", "5"));
-        hand.addCard(new Card("Clubs", "5"));
-        hand.addCard(new Card("Diamonds", "5"));
-        assertEquals(15, hand.getValue());
     }
-
 
     @Test
     void testIsBust() {
         Hand hand = new Hand();
 
-        // particions equivalents: < 21, 21, > 21
-
-        // Cas no bust
+        // Cas < 21
         hand.addCard(new Card("Hearts", "10"));
         hand.addCard(new Card("Clubs", "9"));
         assertFalse(hand.isBust());  // 19
 
-        // Cas bust simple
+        // Cas > 21 (bust)
         hand.addCard(new Card("Spades", "5"));
         assertTrue(hand.isBust());   // 24
 
-        // Cas que NO ha de bustar perquè lAs passa a 1
+        // As baixa per evitar bust
         hand = new Hand();
         hand.addCard(new Card("Hearts", "A"));
         hand.addCard(new Card("Clubs", "9"));
         hand.addCard(new Card("Spades", "9"));
-        assertFalse(hand.isBust());  // 1 + 9 + 9 = 19
+        assertFalse(hand.isBust());  // 19
 
-        // cas exacte 21
-
+        // Cas exacte 21
         hand = new Hand();
         hand.addCard(new Card("Hearts", "10"));
-        hand.addCard(new Card("Clubs", "A")); // 21
+        hand.addCard(new Card("Clubs", "A"));
         assertFalse(hand.isBust());
-
     }
-
 
     @Test
     void testIsBlackjack() {
         Hand hand = new Hand();
-
-        // particions equivalents
 
         // Cas blackjack natural
         hand.addCard(new Card("Hearts", "A"));
         hand.addCard(new Card("Spades", "K"));
         assertTrue(hand.isBlackjack());
 
-        // no es blackjack amb 2 cartes
+        // 2 cartes però no 21
         hand = new Hand();
         hand.addCard(new Card("Hearts", "10"));
         hand.addCard(new Card("Clubs", "9"));
         assertFalse(hand.isBlackjack());
 
-        // No és blackjack amb mes de 2 cartes
+        // Més de 2 cartes
         hand.addCard(new Card("Clubs", "2"));
         assertFalse(hand.isBlackjack());
 
-        // No és blackjack: 21 pero amb 3 cartes
+        // 21 amb 3 cartes
         hand = new Hand();
         hand.addCard(new Card("Hearts", "7"));
         hand.addCard(new Card("Clubs", "7"));
         hand.addCard(new Card("Spades", "7"));
         assertFalse(hand.isBlackjack());
-
     }
-
-
 }
