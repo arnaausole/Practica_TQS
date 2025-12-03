@@ -29,6 +29,7 @@ public class GameController {
 
         player.reset();
         dealer.reset();
+        deck = new Deck();
 
         player.getHand().addCard(deck.drawCard());
         player.getHand().addCard(deck.drawCard());
@@ -37,27 +38,41 @@ public class GameController {
         dealer.getHand().addCard(deck.drawCard());
 
         view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());
-
+        view.showMessage("New game started. Your turn!");
     }
 
     public void playerHit() {
 
+        if (player.isStanding()) {
+            return;
+        }
+
         Card c = deck.drawCard();
+        if (c == null) {
+            view.showMessage("No more cards in the deck.");
+            return;
+        }
+
         player.hit(c);
         view.showCard(player, c);
+        view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());
 
         if (player.getHand().isBust()) {
             view.showMessage("Player busts.");
         }
-
     }
 
     public void playerStand() {
 
+        if (player.isStanding()) {
+            return;
+        }
+
         player.stand();
         dealer.play(deck);
-        view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());
 
+        view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());
+        determineWinner();
     }
 
     public void determineWinner() {
@@ -80,6 +95,5 @@ public class GameController {
         else {
             view.showMessage("Tie.");
         }
-
     }
 }
