@@ -83,6 +83,8 @@ public class HandTest {
     void testIsBust() {
         Hand hand = new Hand();
 
+        // particions equivalents: < 21, 21, > 21
+
         // Cas no bust
         hand.addCard(new Card("Hearts", "10"));
         hand.addCard(new Card("Clubs", "9"));
@@ -98,6 +100,14 @@ public class HandTest {
         hand.addCard(new Card("Clubs", "9"));
         hand.addCard(new Card("Spades", "9"));
         assertFalse(hand.isBust());  // 1 + 9 + 9 = 19
+
+        // cas exacte 21
+
+        hand = new Hand();
+        hand.addCard(new Card("Hearts", "10"));
+        hand.addCard(new Card("Clubs", "A")); // 21
+        assertFalse(hand.isBust());
+
     }
 
 
@@ -105,12 +115,20 @@ public class HandTest {
     void testIsBlackjack() {
         Hand hand = new Hand();
 
+        // particions equivalents
+
         // Cas blackjack natural
         hand.addCard(new Card("Hearts", "A"));
         hand.addCard(new Card("Spades", "K"));
         assertTrue(hand.isBlackjack());
 
-        // No és blackjack: més de 2 cartes
+        // no es blackjack amb 2 cartes
+        hand = new Hand();
+        hand.addCard(new Card("Hearts", "10"));
+        hand.addCard(new Card("Clubs", "9"));
+        assertFalse(hand.isBlackjack());
+
+        // No és blackjack amb mes de 2 cartes
         hand.addCard(new Card("Clubs", "2"));
         assertFalse(hand.isBlackjack());
 
@@ -120,6 +138,9 @@ public class HandTest {
         hand.addCard(new Card("Clubs", "7"));
         hand.addCard(new Card("Spades", "7"));
         assertFalse(hand.isBlackjack());
+
+        
+
     }
 
 
