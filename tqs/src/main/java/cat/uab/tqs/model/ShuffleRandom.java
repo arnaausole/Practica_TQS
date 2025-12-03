@@ -7,4 +7,5 @@ public class ShuffleRandom implements Shuffler {
     @Override
     public void shuffle(List<Card> cards) {
         Collections.shuffle(cards);
+    }
 }
