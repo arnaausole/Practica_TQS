@@ -40,9 +40,12 @@ public class DeckTest {
         assertEquals(52, deck.getCards().size());
 
         // Cas 3: carta vàlida
-        Card c = deck.getCardAt(0);
-        assertNotNull(c.getRank());
-        assertNotNull(c.getSuit());
+        Card first = deck.getCardAt(0);
+        Card last  = deck.getCardAt(deck.size() - 1);
+        assertNotNull(first.getRank());
+        assertNotNull(first.getSuit());
+        assertNotNull(last.getRank());
+        assertNotNull(last.getSuit());
     }
 
     @Test

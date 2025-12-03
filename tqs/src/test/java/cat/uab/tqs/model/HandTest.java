@@ -139,8 +139,6 @@ public class HandTest {
         hand.addCard(new Card("Spades", "7"));
         assertFalse(hand.isBlackjack());
 
-        
-
     }
 
 
