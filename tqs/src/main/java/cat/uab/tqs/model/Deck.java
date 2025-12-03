@@ -8,8 +8,10 @@ public class Deck {
     private List<Card> cards;
     private Shuffler shuffler;
 
-    public Deck() {
+    public Deck(Shuffler shuffler) {
+        this.shuffler = shuffler;
         cards = new ArrayList<>();
+
         String[] suits = {"Hearts", "Diamonds", "Clubs", "Spades"};
         String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
 
@@ -18,6 +20,12 @@ public class Deck {
                 cards.add(new Card(suit, rank));
             }
         }
+
+        this.shuffler.shuffle(cards);
+    }
+
+    public Deck() {
+        this(new ShuffleRandom());
     }
 
     public int size() {
@@ -30,16 +38,13 @@ public class Deck {
 
     public boolean contains(Card c) {
         for (Card card : cards) {
-            boolean sameRank = card.getRank().equals(c.getRank());
-            boolean sameSuit = card.getSuit().equals(c.getSuit());
-
-            if (sameRank && sameSuit) {
+            if (card.getRank().equals(c.getRank()) &&
+                card.getSuit().equals(c.getSuit())) {
                 return true;
             }
         }
         return false;
     }
-
 
     public Card getCardAt(int index) {
         return cards.get(index);
@@ -50,22 +55,19 @@ public class Deck {
     }
 
     public Card drawCard() {
-        if (!cards.isEmpty()) {
-            return cards.remove(0);
-        }
-        return null;
+        return cards.isEmpty() ? null : cards.remove(0);
     }
 
-    public void setShufflerRandom(Shuffler shuffler) {
-        // This method is to set a custom shuffler for testing purposes
-        this.shuffler = shuffler;
-    }
-
-    public Shuffler getShufflerRandom() {
-    	return this.shuffler;
-    }
-    
     public void shuffle() {
         shuffler.shuffle(cards);
+    }
+
+    public Shuffler getShuffler() {
+        return shuffler;
+    }
+
+    public void setShuffler(Shuffler shuffler) {
+        this.shuffler = shuffler;
+        this.shuffler.shuffle(cards);
     }
 }
