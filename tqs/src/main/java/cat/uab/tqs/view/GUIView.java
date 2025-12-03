@@ -8,8 +8,8 @@ import cat.uab.tqs.model.*;
 public class GUIView implements GameView {
 
     private JFrame frame;
-    private JTextArea playerCards;
-    private JTextArea dealerCards;
+    private JPanel playerCardsPanel;
+    private JPanel dealerCardsPanel;
     private JLabel playerScore;
     private JLabel dealerScore;
     private JLabel statusLabel;
@@ -31,46 +31,93 @@ public class GUIView implements GameView {
 
         frame = new JFrame("Blackjack");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 450);
+        frame.setSize(900, 600);
+        frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
 
+        Color tableGreen = new Color(0, 102, 0);
+        Color darkGreen = new Color(0, 70, 0);
+        Color gold = new Color(212, 175, 55);
+
         JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBackground(darkGreen);
         statusLabel = new JLabel("Welcome to Blackjack!", SwingConstants.CENTER);
-        statusLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        statusLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
+        statusLabel.setForeground(gold);
+        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         topPanel.add(statusLabel, BorderLayout.CENTER);
         frame.add(topPanel, BorderLayout.NORTH);
 
-        JPanel centerPanel = new JPanel(new GridLayout(1, 2));
+        JPanel tablePanel = new JPanel();
+        tablePanel.setBackground(tableGreen);
+        tablePanel.setLayout(new GridLayout(2, 1, 0, 20));
+        tablePanel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
-        JPanel playerPanel = new JPanel();
-        playerPanel.setLayout(new BorderLayout());
-        playerPanel.setBorder(BorderFactory.createTitledBorder("Player"));
-        playerScore = new JLabel("Score: 0");
-        playerCards = new JTextArea();
-        playerCards.setEditable(false);
-        playerCards.setFont(new Font("Monospaced", Font.PLAIN, 14));
-        playerPanel.add(playerScore, BorderLayout.NORTH);
-        playerPanel.add(new JScrollPane(playerCards), BorderLayout.CENTER);
+        JPanel dealerPanel = new JPanel(new BorderLayout());
+        dealerPanel.setOpaque(false);
 
-        JPanel dealerPanel = new JPanel();
-        dealerPanel.setLayout(new BorderLayout());
-        dealerPanel.setBorder(BorderFactory.createTitledBorder("Dealer"));
-        dealerScore = new JLabel("Score: 0");
-        dealerCards = new JTextArea();
-        dealerCards.setEditable(false);
-        dealerCards.setFont(new Font("Monospaced", Font.PLAIN, 14));
-        dealerPanel.add(dealerScore, BorderLayout.NORTH);
-        dealerPanel.add(new JScrollPane(dealerCards), BorderLayout.CENTER);
+        JPanel dealerHeader = new JPanel(new BorderLayout());
+        dealerHeader.setOpaque(false);
+        JLabel dealerLabel = new JLabel("DEALER");
+        dealerLabel.setForeground(Color.WHITE);
+        dealerLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+        dealerScore = new JLabel("Score: 0", SwingConstants.RIGHT);
+        dealerScore.setForeground(Color.WHITE);
+        dealerScore.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        dealerHeader.add(dealerLabel, BorderLayout.WEST);
+        dealerHeader.add(dealerScore, BorderLayout.EAST);
 
-        centerPanel.add(playerPanel);
-        centerPanel.add(dealerPanel);
-        frame.add(centerPanel, BorderLayout.CENTER);
+        dealerCardsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        dealerCardsPanel.setOpaque(false);
 
-        JPanel buttonsPanel = new JPanel(new FlowLayout());
+        dealerPanel.add(dealerHeader, BorderLayout.NORTH);
+        dealerPanel.add(dealerCardsPanel, BorderLayout.CENTER);
 
-        startButton = new JButton("Start");
+        JPanel playerPanel = new JPanel(new BorderLayout());
+        playerPanel.setOpaque(false);
+
+        JPanel playerHeader = new JPanel(new BorderLayout());
+        playerHeader.setOpaque(false);
+        JLabel playerLabel = new JLabel("PLAYER");
+        playerLabel.setForeground(Color.WHITE);
+        playerLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
+        playerScore = new JLabel("Score: 0", SwingConstants.RIGHT);
+        playerScore.setForeground(Color.WHITE);
+        playerScore.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        playerHeader.add(playerLabel, BorderLayout.WEST);
+        playerHeader.add(playerScore, BorderLayout.EAST);
+
+        playerCardsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        playerCardsPanel.setOpaque(false);
+
+        playerPanel.add(playerHeader, BorderLayout.NORTH);
+        playerPanel.add(playerCardsPanel, BorderLayout.CENTER);
+
+        tablePanel.add(dealerPanel);
+        tablePanel.add(playerPanel);
+
+        frame.add(tablePanel, BorderLayout.CENTER);
+
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setBackground(darkGreen);
+        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        startButton = new JButton("New Game");
         hitButton = new JButton("Hit");
         standButton = new JButton("Stand");
+
+        Dimension btnSize = new Dimension(120, 40);
+        Font btnFont = new Font("SansSerif", Font.BOLD, 14);
+
+        JButton[] buttons = {startButton, hitButton, standButton};
+        for (JButton b : buttons) {
+            b.setPreferredSize(btnSize);
+            b.setFont(btnFont);
+            b.setFocusPainted(false);
+            b.setBackground(gold);
+            b.setForeground(Color.BLACK);
+            b.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        }
 
         hitButton.setEnabled(false);
         standButton.setEnabled(false);
@@ -98,6 +145,65 @@ public class GUIView implements GameView {
         frame.setVisible(true);
     }
 
+    private JPanel createCardComponent(Card c) {
+        JPanel cardPanel = new JPanel();
+        cardPanel.setPreferredSize(new Dimension(60, 90));
+        cardPanel.setBackground(Color.WHITE);
+        cardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        cardPanel.setLayout(new BorderLayout());
+
+        String suit = c.getSuit();
+        String symbol = "?";
+        if ("Hearts".equals(suit)) symbol = "♥";
+        else if ("Diamonds".equals(suit)) symbol = "♦";
+        else if ("Clubs".equals(suit)) symbol = "♣";
+        else if ("Spades".equals(suit)) symbol = "♠";
+
+        boolean isRed = "Hearts".equals(suit) || "Diamonds".equals(suit);
+        Color textColor = isRed ? Color.RED : Color.BLACK;
+
+        JLabel top = new JLabel(c.getRank(), SwingConstants.LEFT);
+        top.setFont(new Font("SansSerif", Font.BOLD, 14));
+        top.setForeground(textColor);
+        top.setBorder(BorderFactory.createEmptyBorder(4, 4, 0, 0));
+
+        JLabel center = new JLabel(symbol, SwingConstants.CENTER);
+        center.setFont(new Font("SansSerif", Font.PLAIN, 28));
+        center.setForeground(textColor);
+
+        JLabel bottom = new JLabel(c.getRank(), SwingConstants.RIGHT);
+        bottom.setFont(new Font("SansSerif", Font.BOLD, 14));
+        bottom.setForeground(textColor);
+        bottom.setBorder(BorderFactory.createEmptyBorder(0, 0, 4, 4));
+
+        cardPanel.add(top, BorderLayout.NORTH);
+        cardPanel.add(center, BorderLayout.CENTER);
+        cardPanel.add(bottom, BorderLayout.SOUTH);
+
+        return cardPanel;
+    }
+
+    private void refreshCards() {
+        if (controller == null) {
+            return;
+        }
+
+        playerCardsPanel.removeAll();
+        for (Card c : controller.getPlayer().getHand().getCards()) {
+            playerCardsPanel.add(createCardComponent(c));
+        }
+
+        dealerCardsPanel.removeAll();
+        for (Card c : controller.getDealer().getHand().getCards()) {
+            dealerCardsPanel.add(createCardComponent(c));
+        }
+
+        playerCardsPanel.revalidate();
+        playerCardsPanel.repaint();
+        dealerCardsPanel.revalidate();
+        dealerCardsPanel.repaint();
+    }
+
     @Override
     public void showMessage(String msg) {
         statusLabel.setText(msg);
@@ -105,23 +211,13 @@ public class GUIView implements GameView {
 
     @Override
     public void showCard(Player player, Card c) {
-        playerCards.append(c.getRank() + " of " + c.getSuit() + "\n");
+        refreshCards();
     }
 
     @Override
     public void updateScores(int playerValue, int dealerValue) {
-
         playerScore.setText("Score: " + playerValue);
         dealerScore.setText("Score: " + dealerValue);
-
-        playerCards.setText("");
-        for (Card c : controller.getPlayer().getHand().getCards()) {
-            playerCards.append(c.getRank() + " of " + c.getSuit() + "\n");
-        }
-
-        dealerCards.setText("");
-        for (Card c : controller.getDealer().getHand().getCards()) {
-            dealerCards.append(c.getRank() + " of " + c.getSuit() + "\n");
-        }
+        refreshCards();
     }
 }
