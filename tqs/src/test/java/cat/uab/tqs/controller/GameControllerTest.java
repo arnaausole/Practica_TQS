@@ -103,7 +103,7 @@ public class GameControllerTest {
     @Test
     void testDetermineWinner() {
 
-        // Decision + condition coverage:
+        // Decision + condition coverage + path coverage:
         //
         //  boolean playerBJ = player.getHand().isBlackjack();
         //  boolean dealerBJ = dealer.getHand().isBlackjack();

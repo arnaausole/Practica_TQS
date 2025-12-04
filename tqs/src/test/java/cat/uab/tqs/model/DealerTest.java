@@ -12,7 +12,7 @@ class DealerTest {
     @Test
     void testPlay() {
     
-        // DECISION COVERAGE + CONDITION COVERAGE + LIMITS
+        // DECISION COVERAGE + CONDITION COVERAGE +  PATH COVERAGE + LIMITS
 
         // Cas 1: Dealer amb 17 o mes --> no ha de robar cartes: false/true
         Deck deck1 = new Deck();
