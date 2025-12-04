@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MockShuffleRandom implements Shuffler {
 
-    List<Card> predefinedOrder = List.of(
+    private final List<Card> predefinedOrder = List.of(
         new Card("Hearts", "A"),
         new Card("Diamonds", "K"),
         new Card("Clubs", "Q"),
