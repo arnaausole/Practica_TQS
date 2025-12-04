@@ -95,13 +95,29 @@ public class GameControllerTest {
 
         //dps de plantarse la carta del dealer es descobreix
         assertFalse(view.dealerHidden);
-        
+
         assertTrue(view.lastPlayerScore > 0);
         assertTrue(view.lastDealerScore > 0);
     }
 
     @Test
     void testDetermineWinner() {
+
+        // Decision + condition coverage:
+        //
+        //  boolean playerBJ = player.getHand().isBlackjack();
+        //  boolean dealerBJ = dealer.getHand().isBlackjack();
+        //
+        //  if (playerBJ && dealerBJ)           -> "Tie. Both have blackjack."
+        //  else if (playerBJ)                  -> "Player wins with blackjack."
+        //  else if (dealerBJ)                  -> "Dealer wins with blackjack."
+        //  else if (player.isBust())           -> "Dealer wins."
+        //  else if (dealer.isBust())           -> "Player wins."
+        //  else if (p > d)                     -> "Player wins."
+        //  else if (p < d)                     -> "Dealer wins."
+        //  else                                -> "Tie."
+        //
+        // Cobrim tots els camins amb 8 casos
 
         // valors limit/frontera
 
