@@ -77,7 +77,7 @@ public class GameController {
 
         assert invariant();
 
-        if (player.isStanding()) {
+        if (player.isStanding() || player.getHand().isBlackjack()) {
             assert invariant();
             return;
         }
@@ -132,9 +132,27 @@ public class GameController {
 
         assert invariant();
 
+        // si un te 21 amb 3 cartes i laltre te blackjack (A + 10), guanya el que te blackjack natural
+
         int p = player.getHand().getValue();
         int d = dealer.getHand().getValue();
 
+        boolean playerBJ = player.getHand().isBlackjack();
+        boolean dealerBJ = dealer.getHand().isBlackjack();
+
+        // casos de blackjack natural
+        if (playerBJ && dealerBJ) {
+            view.showMessage("Tie. Both have blackjack.");
+            return;
+        } else if (playerBJ) {
+            view.showMessage("Player wins with blackjack.");
+            return;
+        } else if (dealerBJ) {
+            view.showMessage("Dealer wins with blackjack.");
+            return;
+        }
+
+        // cas sense blackjack
         if (player.getHand().isBust()) {
             view.showMessage("Dealer wins.");
         }
