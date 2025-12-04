@@ -12,9 +12,9 @@ class DealerTest {
     @Test
     void testPlay() {
     
-        // valor frontera: limit superior
+        // DECISION COVERAGE + CONDITION COVERAGE + LIMITS
 
-        // CAS 1: Dealer amb 17 o més --> no ha de robar cartes
+        // Cas 1: Dealer amb 17 o mes --> no ha de robar cartes: false/true
         Deck deck1 = new Deck();
         Dealer dealer1 = new Dealer();
 
@@ -26,9 +26,7 @@ class DealerTest {
         assertEquals(17, dealer1.getHand().getValue());
         assertEquals(initialSize1, deck1.size()); // no ha robat
 
-        // valor frontera: limit inferior
-
-        // CAS 2: Dealer amb 16 --> ha de robar com a minim una carta
+        // Cas 2: Dealer amb 16 --> ha de robar com a minim una carta: true/true
         Deck deck2 = new Deck();
         Dealer dealer2 = new Dealer();
 
@@ -41,7 +39,7 @@ class DealerTest {
         assertTrue(dealer2.getHand().getValue() >= 17);
         assertTrue(deck2.size() < sizeBefore2);  // ha robat
 
-        // CAS 3: Loop testing --> dealer té 3 cartes petites
+        // Cas 3: Loop testing --> dealer té 3 cartes petites
 
         Deck deck3 = new Deck();
         Dealer dealer3 = new Dealer();
@@ -58,7 +56,7 @@ class DealerTest {
 
         // Asos (particio equivalent + path coverage)
         
-        // CAS 4: Dealer té A + 5 --> pot ser 16 --> ha de robar
+        // Cas 4: Dealer té A + 5 --> pot ser 16 --> ha de robar
         Deck deck4 = new Deck();
         Dealer dealer4 = new Dealer();
 
@@ -71,7 +69,7 @@ class DealerTest {
         assertTrue(dealer4.getHand().getValue() >= 17);
         assertTrue(deck4.size() < sizeBefore4);
 
-        // CAS 5: Dealer té A + 6 --> 17 exacte --> no ha de robar
+        // Cas 5: Dealer té A + 6 --> 17 exacte --> no ha de robar: false/true
 
         Deck deck5 = new Deck();
         Dealer dealer5 = new Dealer();
@@ -85,7 +83,7 @@ class DealerTest {
         assertEquals(17, dealer5.getHand().getValue());
         assertEquals(sizeBefore5, deck5.size());  // no ha robat
 
-        // CAS 6: baralla buida --> no roba res ni canvia res
+        // Cas 6: baralla buida --> no roba res ni canvia res: true/false
 
         Deck emptyDeck = new Deck();
         Dealer dealer6 = new Dealer();
@@ -103,5 +101,27 @@ class DealerTest {
 
         assertEquals(15, dealer6.getHand().getValue());  // no canvia
         assertEquals(sizeBefore6, emptyDeck.size());     // no roba res
+
+
+        // false/true ja cobert (cas 1 i 5)
+
+        // Cas 7: baralla buida pero >17 --> no roba res: false/true
+
+        Deck deck7 = new Deck();
+        Dealer dealer7 = new Dealer();
+
+        for (int i = 0; i < 52; i++) { 
+            deck7.drawCard(); // buidem
+        }
+
+        dealer7.getHand().addCard(new Card("Hearts", "7"));
+        dealer7.getHand().addCard(new Card("Clubs", "8")); // total = 15
+
+        int sizeBefore7 = deck7.size();
+        dealer7.play(deck7); // no pot entrar al while pq !empty = false
+
+        assertEquals(15, dealer7.getHand().getValue());
+        assertEquals(sizeBefore7, deck7.size()); // no roba
     }
+    
 }
