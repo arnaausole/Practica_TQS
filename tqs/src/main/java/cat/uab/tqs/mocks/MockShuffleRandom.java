@@ -3,6 +3,7 @@ package cat.uab.tqs.mocks;
 import cat.uab.tqs.model.*;
 import java.util.List;
 
+// Classe que utilitza un ordre predefinit per a les cartes (mock)
 public class MockShuffleRandom implements Shuffler {
 
     private final List<Card> predefinedOrder = List.of(
