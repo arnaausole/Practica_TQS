@@ -66,7 +66,8 @@ public class GameController {
         assert player.getHand().getCards().size() == 2;
         assert dealer.getHand().getCards().size() == 2;
 
-
+        // amaguem la carta del dealer (per evitar manipular el joc)
+        view.setDealerHidden(true);
         view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());
         view.showMessage("New game started. Your turn!");
 
@@ -100,6 +101,9 @@ public class GameController {
         assert player.getHand().getCards().size() == oldSize + 1;
 
         if (player.getHand().isBust()) {
+
+            view.setDealerHidden(false);
+            view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());
             view.showMessage("Player busts.");
         }
 
@@ -118,6 +122,9 @@ public class GameController {
 
         player.stand();
         dealer.play(deck);
+
+        //mostrem la carta del dealer
+        view.setDealerHidden(false);
 
         view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());
         determineWinner();

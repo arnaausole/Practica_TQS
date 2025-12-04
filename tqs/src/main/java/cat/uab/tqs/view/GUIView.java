@@ -19,6 +19,8 @@ public class GUIView implements GameView {
 
     private GameController controller;
 
+    private boolean dealerHidden = false;
+
     public GUIView() {
         initGUI();
     }
@@ -53,6 +55,7 @@ public class GUIView implements GameView {
         tablePanel.setLayout(new GridLayout(2, 1, 0, 20));
         tablePanel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));
 
+        // DEALER
         JPanel dealerPanel = new JPanel(new BorderLayout());
         dealerPanel.setOpaque(false);
 
@@ -73,6 +76,7 @@ public class GUIView implements GameView {
         dealerPanel.add(dealerHeader, BorderLayout.NORTH);
         dealerPanel.add(dealerCardsPanel, BorderLayout.CENTER);
 
+        // PLAYER
         JPanel playerPanel = new JPanel(new BorderLayout());
         playerPanel.setOpaque(false);
 
@@ -98,6 +102,7 @@ public class GUIView implements GameView {
 
         frame.add(tablePanel, BorderLayout.CENTER);
 
+        // BOTONS
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setBackground(darkGreen);
         buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -183,19 +188,47 @@ public class GUIView implements GameView {
         return cardPanel;
     }
 
+    private JPanel createHiddenCardComponent() {
+        JPanel cardPanel = new JPanel();
+        cardPanel.setPreferredSize(new Dimension(60, 90));
+        cardPanel.setBackground(new Color(0, 0, 128)); // blau fosc tipus dors
+        cardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        cardPanel.setLayout(new BorderLayout());
+
+        JLabel center = new JLabel("★", SwingConstants.CENTER);
+        center.setFont(new Font("SansSerif", Font.BOLD, 26));
+        center.setForeground(Color.WHITE);
+
+        cardPanel.add(center, BorderLayout.CENTER);
+        return cardPanel;
+    }
+
     private void refreshCards() {
         if (controller == null) {
             return;
         }
 
+        // PLAYER
         playerCardsPanel.removeAll();
         for (Card c : controller.getPlayer().getHand().getCards()) {
             playerCardsPanel.add(createCardComponent(c));
         }
 
+        // DEALER
         dealerCardsPanel.removeAll();
-        for (Card c : controller.getDealer().getHand().getCards()) {
-            dealerCardsPanel.add(createCardComponent(c));
+        java.util.List<Card> dealerHand = controller.getDealer().getHand().getCards();
+
+        if (dealerHidden && !dealerHand.isEmpty()) {
+            // 1a carta visible
+            dealerCardsPanel.add(createCardComponent(dealerHand.get(0)));
+            // resta ocultes
+            for (int i = 1; i < dealerHand.size(); i++) {
+                dealerCardsPanel.add(createHiddenCardComponent());
+            }
+        } else {
+            for (Card c : dealerHand) {
+                dealerCardsPanel.add(createCardComponent(c));
+            }
         }
 
         playerCardsPanel.revalidate();
@@ -217,7 +250,19 @@ public class GUIView implements GameView {
     @Override
     public void updateScores(int playerValue, int dealerValue) {
         playerScore.setText("Score: " + playerValue);
-        dealerScore.setText("Score: " + dealerValue);
+
+        if (dealerHidden) {
+            dealerScore.setText("Score: ?");
+        } else {
+            dealerScore.setText("Score: " + dealerValue);
+        }
+
+        refreshCards();
+    }
+
+    @Override
+    public void setDealerHidden(boolean hidden) {
+        this.dealerHidden = hidden;
         refreshCards();
     }
 }
