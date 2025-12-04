@@ -8,10 +8,40 @@ public class Deck {
     private List<Card> cards;
     private Shuffler shuffler;
 
-    private boolean invariant()
-    {
-        return cards != null && shuffler != null && cards.size() >= 0 && cards.size() <= 52;
+    // el palo es valid
+    private boolean isValidSuit(String suit) {
+        return "Hearts".equals(suit)
+            || "Diamonds".equals(suit)
+            || "Clubs".equals(suit)
+            || "Spades".equals(suit);
+    }
 
+    // el numero es valid
+    private boolean isValidRank(String rank) {
+        return "2".equals(rank) || "3".equals(rank) || "4".equals(rank)
+            || "5".equals(rank) || "6".equals(rank) || "7".equals(rank)
+            || "8".equals(rank) || "9".equals(rank) || "10".equals(rank)
+            || "J".equals(rank) || "Q".equals(rank) || "K".equals(rank)
+            || "A".equals(rank);
+    }
+
+    private boolean invariant() {
+        if (cards == null || shuffler == null) {
+            return false;
+        }
+        if (cards.size() < 0 || cards.size() > 52) {
+            return false;
+        }
+        // totes les cartes dins del domini
+        for (Card c : cards) {
+            if (c == null) {
+                return false;
+            }
+            if (!isValidSuit(c.getSuit()) || !isValidRank(c.getRank())) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -93,9 +123,6 @@ public class Deck {
     }
 
     public Card drawCard() {
-
-        assert invariant();
-
 
         assert invariant();
 
