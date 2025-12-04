@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Deck.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tqs</a> &gt; <a href="index.source.html" class="el_package">cat.uab.tqs.model</a> &gt; <span class="el_source">Deck.java</span></div><h1>Deck.java</h1><pre class="source lang-java linenums">package cat.uab.tqs.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Deck {
+
+    private List&lt;Card&gt; cards;
+    private Shuffler shuffler;
+
+<span class="fc" id="L11">    public Deck(Shuffler shuffler) {</span>
+<span class="fc" id="L12">        this.shuffler = shuffler;</span>
+<span class="fc" id="L13">        cards = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L15">        String[] suits = {&quot;Hearts&quot;, &quot;Diamonds&quot;, &quot;Clubs&quot;, &quot;Spades&quot;};</span>
+<span class="fc" id="L16">        String[] ranks = {&quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;, &quot;J&quot;, &quot;Q&quot;, &quot;K&quot;, &quot;A&quot;};</span>
+
+<span class="fc bfc" id="L18" title="All 2 branches covered.">        for (String suit : suits) {</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">            for (String rank : ranks) {</span>
+<span class="fc" id="L20">                cards.add(new Card(suit, rank));</span>
+            }
+        }
+
+<span class="fc" id="L24">        this.shuffler.shuffle(cards);</span>
+<span class="fc" id="L25">    }</span>
+
+    public Deck() {
+<span class="fc" id="L28">        this(new ShuffleRandom());</span>
+<span class="fc" id="L29">    }</span>
+
+    public int size() {
+<span class="fc" id="L32">        return cards.size();</span>
+    }
+
+    public boolean isEmpty() {
+<span class="fc" id="L36">        return cards.isEmpty();</span>
+    }
+
+    public boolean contains(Card c) {
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        for (Card card : cards) {</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">            if (card.getRank().equals(c.getRank()) &amp;&amp;</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">                card.getSuit().equals(c.getSuit())) {</span>
+<span class="fc" id="L43">                return true;</span>
+            }
+<span class="fc" id="L45">        }</span>
+<span class="fc" id="L46">        return false;</span>
+    }
+
+    public Card getCardAt(int index) {
+<span class="fc" id="L50">        return cards.get(index);</span>
+    }
+
+    public List&lt;Card&gt; getCards() {
+<span class="fc" id="L54">        return cards;</span>
+    }
+
+    public Card drawCard() {
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        return cards.isEmpty() ? null : cards.remove(0);</span>
+    }
+
+    public void shuffle() {
+<span class="nc" id="L62">        shuffler.shuffle(cards);</span>
+<span class="nc" id="L63">    }</span>
+
+    public Shuffler getShuffler() {
+<span class="nc" id="L66">        return shuffler;</span>
+    }
+
+    public void setShuffler(Shuffler shuffler) {
+<span class="nc" id="L70">        this.shuffler = shuffler;</span>
+<span class="nc" id="L71">        this.shuffler.shuffle(cards);</span>
+<span class="nc" id="L72">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

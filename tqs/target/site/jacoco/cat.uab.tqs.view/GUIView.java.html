@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GUIView.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tqs</a> &gt; <a href="index.source.html" class="el_package">cat.uab.tqs.view</a> &gt; <span class="el_source">GUIView.java</span></div><h1>GUIView.java</h1><pre class="source lang-java linenums">package cat.uab.tqs.view;
+
+import javax.swing.*;
+import java.awt.*;
+import cat.uab.tqs.controller.GameController;
+import cat.uab.tqs.model.*;
+
+public class GUIView implements GameView {
+
+    private JFrame frame;
+    private JPanel playerCardsPanel;
+    private JPanel dealerCardsPanel;
+    private JLabel playerScore;
+    private JLabel dealerScore;
+    private JLabel statusLabel;
+    private JButton startButton;
+    private JButton hitButton;
+    private JButton standButton;
+
+    private GameController controller;
+
+<span class="nc" id="L22">    public GUIView() {</span>
+<span class="nc" id="L23">        initGUI();</span>
+<span class="nc" id="L24">    }</span>
+
+    public void setController(GameController controller) {
+<span class="nc" id="L27">        this.controller = controller;</span>
+<span class="nc" id="L28">    }</span>
+
+    private void initGUI() {
+
+<span class="nc" id="L32">        frame = new JFrame(&quot;Blackjack&quot;);</span>
+<span class="nc" id="L33">        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L34">        frame.setSize(900, 600);</span>
+<span class="nc" id="L35">        frame.setLocationRelativeTo(null);</span>
+<span class="nc" id="L36">        frame.setLayout(new BorderLayout());</span>
+
+<span class="nc" id="L38">        Color tableGreen = new Color(0, 102, 0);</span>
+<span class="nc" id="L39">        Color darkGreen = new Color(0, 70, 0);</span>
+<span class="nc" id="L40">        Color gold = new Color(212, 175, 55);</span>
+
+<span class="nc" id="L42">        JPanel topPanel = new JPanel(new BorderLayout());</span>
+<span class="nc" id="L43">        topPanel.setBackground(darkGreen);</span>
+<span class="nc" id="L44">        statusLabel = new JLabel(&quot;Welcome to Blackjack!&quot;, SwingConstants.CENTER);</span>
+<span class="nc" id="L45">        statusLabel.setFont(new Font(&quot;SansSerif&quot;, Font.BOLD, 22));</span>
+<span class="nc" id="L46">        statusLabel.setForeground(gold);</span>
+<span class="nc" id="L47">        topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));</span>
+<span class="nc" id="L48">        topPanel.add(statusLabel, BorderLayout.CENTER);</span>
+<span class="nc" id="L49">        frame.add(topPanel, BorderLayout.NORTH);</span>
+
+<span class="nc" id="L51">        JPanel tablePanel = new JPanel();</span>
+<span class="nc" id="L52">        tablePanel.setBackground(tableGreen);</span>
+<span class="nc" id="L53">        tablePanel.setLayout(new GridLayout(2, 1, 0, 20));</span>
+<span class="nc" id="L54">        tablePanel.setBorder(BorderFactory.createEmptyBorder(20, 40, 20, 40));</span>
+
+<span class="nc" id="L56">        JPanel dealerPanel = new JPanel(new BorderLayout());</span>
+<span class="nc" id="L57">        dealerPanel.setOpaque(false);</span>
+
+<span class="nc" id="L59">        JPanel dealerHeader = new JPanel(new BorderLayout());</span>
+<span class="nc" id="L60">        dealerHeader.setOpaque(false);</span>
+<span class="nc" id="L61">        JLabel dealerLabel = new JLabel(&quot;DEALER&quot;);</span>
+<span class="nc" id="L62">        dealerLabel.setForeground(Color.WHITE);</span>
+<span class="nc" id="L63">        dealerLabel.setFont(new Font(&quot;SansSerif&quot;, Font.BOLD, 18));</span>
+<span class="nc" id="L64">        dealerScore = new JLabel(&quot;Score: 0&quot;, SwingConstants.RIGHT);</span>
+<span class="nc" id="L65">        dealerScore.setForeground(Color.WHITE);</span>
+<span class="nc" id="L66">        dealerScore.setFont(new Font(&quot;SansSerif&quot;, Font.PLAIN, 16));</span>
+<span class="nc" id="L67">        dealerHeader.add(dealerLabel, BorderLayout.WEST);</span>
+<span class="nc" id="L68">        dealerHeader.add(dealerScore, BorderLayout.EAST);</span>
+
+<span class="nc" id="L70">        dealerCardsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));</span>
+<span class="nc" id="L71">        dealerCardsPanel.setOpaque(false);</span>
+
+<span class="nc" id="L73">        dealerPanel.add(dealerHeader, BorderLayout.NORTH);</span>
+<span class="nc" id="L74">        dealerPanel.add(dealerCardsPanel, BorderLayout.CENTER);</span>
+
+<span class="nc" id="L76">        JPanel playerPanel = new JPanel(new BorderLayout());</span>
+<span class="nc" id="L77">        playerPanel.setOpaque(false);</span>
+
+<span class="nc" id="L79">        JPanel playerHeader = new JPanel(new BorderLayout());</span>
+<span class="nc" id="L80">        playerHeader.setOpaque(false);</span>
+<span class="nc" id="L81">        JLabel playerLabel = new JLabel(&quot;PLAYER&quot;);</span>
+<span class="nc" id="L82">        playerLabel.setForeground(Color.WHITE);</span>
+<span class="nc" id="L83">        playerLabel.setFont(new Font(&quot;SansSerif&quot;, Font.BOLD, 18));</span>
+<span class="nc" id="L84">        playerScore = new JLabel(&quot;Score: 0&quot;, SwingConstants.RIGHT);</span>
+<span class="nc" id="L85">        playerScore.setForeground(Color.WHITE);</span>
+<span class="nc" id="L86">        playerScore.setFont(new Font(&quot;SansSerif&quot;, Font.PLAIN, 16));</span>
+<span class="nc" id="L87">        playerHeader.add(playerLabel, BorderLayout.WEST);</span>
+<span class="nc" id="L88">        playerHeader.add(playerScore, BorderLayout.EAST);</span>
+
+<span class="nc" id="L90">        playerCardsPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));</span>
+<span class="nc" id="L91">        playerCardsPanel.setOpaque(false);</span>
+
+<span class="nc" id="L93">        playerPanel.add(playerHeader, BorderLayout.NORTH);</span>
+<span class="nc" id="L94">        playerPanel.add(playerCardsPanel, BorderLayout.CENTER);</span>
+
+<span class="nc" id="L96">        tablePanel.add(dealerPanel);</span>
+<span class="nc" id="L97">        tablePanel.add(playerPanel);</span>
+
+<span class="nc" id="L99">        frame.add(tablePanel, BorderLayout.CENTER);</span>
+
+<span class="nc" id="L101">        JPanel buttonsPanel = new JPanel();</span>
+<span class="nc" id="L102">        buttonsPanel.setBackground(darkGreen);</span>
+<span class="nc" id="L103">        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));</span>
+
+<span class="nc" id="L105">        startButton = new JButton(&quot;New Game&quot;);</span>
+<span class="nc" id="L106">        hitButton = new JButton(&quot;Hit&quot;);</span>
+<span class="nc" id="L107">        standButton = new JButton(&quot;Stand&quot;);</span>
+
+<span class="nc" id="L109">        Dimension btnSize = new Dimension(120, 40);</span>
+<span class="nc" id="L110">        Font btnFont = new Font(&quot;SansSerif&quot;, Font.BOLD, 14);</span>
+
+<span class="nc" id="L112">        JButton[] buttons = {startButton, hitButton, standButton};</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        for (JButton b : buttons) {</span>
+<span class="nc" id="L114">            b.setPreferredSize(btnSize);</span>
+<span class="nc" id="L115">            b.setFont(btnFont);</span>
+<span class="nc" id="L116">            b.setFocusPainted(false);</span>
+<span class="nc" id="L117">            b.setBackground(gold);</span>
+<span class="nc" id="L118">            b.setForeground(Color.BLACK);</span>
+<span class="nc" id="L119">            b.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));</span>
+        }
+
+<span class="nc" id="L122">        hitButton.setEnabled(false);</span>
+<span class="nc" id="L123">        standButton.setEnabled(false);</span>
+
+<span class="nc" id="L125">        buttonsPanel.add(startButton);</span>
+<span class="nc" id="L126">        buttonsPanel.add(hitButton);</span>
+<span class="nc" id="L127">        buttonsPanel.add(standButton);</span>
+
+<span class="nc" id="L129">        frame.add(buttonsPanel, BorderLayout.SOUTH);</span>
+
+<span class="nc" id="L131">        startButton.addActionListener(e -&gt; {</span>
+<span class="nc" id="L132">            controller.startGame();</span>
+<span class="nc" id="L133">            hitButton.setEnabled(true);</span>
+<span class="nc" id="L134">            standButton.setEnabled(true);</span>
+<span class="nc" id="L135">        });</span>
+
+<span class="nc" id="L137">        hitButton.addActionListener(e -&gt; controller.playerHit());</span>
+
+<span class="nc" id="L139">        standButton.addActionListener(e -&gt; {</span>
+<span class="nc" id="L140">            controller.playerStand();</span>
+<span class="nc" id="L141">            hitButton.setEnabled(false);</span>
+<span class="nc" id="L142">            standButton.setEnabled(false);</span>
+<span class="nc" id="L143">        });</span>
+
+<span class="nc" id="L145">        frame.setVisible(true);</span>
+<span class="nc" id="L146">    }</span>
+
+    private JPanel createCardComponent(Card c) {
+<span class="nc" id="L149">        JPanel cardPanel = new JPanel();</span>
+<span class="nc" id="L150">        cardPanel.setPreferredSize(new Dimension(60, 90));</span>
+<span class="nc" id="L151">        cardPanel.setBackground(Color.WHITE);</span>
+<span class="nc" id="L152">        cardPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));</span>
+<span class="nc" id="L153">        cardPanel.setLayout(new BorderLayout());</span>
+
+<span class="nc" id="L155">        String suit = c.getSuit();</span>
+<span class="nc" id="L156">        String symbol = &quot;?&quot;;</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">        if (&quot;Hearts&quot;.equals(suit)) symbol = &quot;♥&quot;;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">        else if (&quot;Diamonds&quot;.equals(suit)) symbol = &quot;♦&quot;;</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        else if (&quot;Clubs&quot;.equals(suit)) symbol = &quot;♣&quot;;</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">        else if (&quot;Spades&quot;.equals(suit)) symbol = &quot;♠&quot;;</span>
+
+<span class="nc bnc" id="L162" title="All 4 branches missed.">        boolean isRed = &quot;Hearts&quot;.equals(suit) || &quot;Diamonds&quot;.equals(suit);</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">        Color textColor = isRed ? Color.RED : Color.BLACK;</span>
+
+<span class="nc" id="L165">        JLabel top = new JLabel(c.getRank(), SwingConstants.LEFT);</span>
+<span class="nc" id="L166">        top.setFont(new Font(&quot;SansSerif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L167">        top.setForeground(textColor);</span>
+<span class="nc" id="L168">        top.setBorder(BorderFactory.createEmptyBorder(4, 4, 0, 0));</span>
+
+<span class="nc" id="L170">        JLabel center = new JLabel(symbol, SwingConstants.CENTER);</span>
+<span class="nc" id="L171">        center.setFont(new Font(&quot;SansSerif&quot;, Font.PLAIN, 28));</span>
+<span class="nc" id="L172">        center.setForeground(textColor);</span>
+
+<span class="nc" id="L174">        JLabel bottom = new JLabel(c.getRank(), SwingConstants.RIGHT);</span>
+<span class="nc" id="L175">        bottom.setFont(new Font(&quot;SansSerif&quot;, Font.BOLD, 14));</span>
+<span class="nc" id="L176">        bottom.setForeground(textColor);</span>
+<span class="nc" id="L177">        bottom.setBorder(BorderFactory.createEmptyBorder(0, 0, 4, 4));</span>
+
+<span class="nc" id="L179">        cardPanel.add(top, BorderLayout.NORTH);</span>
+<span class="nc" id="L180">        cardPanel.add(center, BorderLayout.CENTER);</span>
+<span class="nc" id="L181">        cardPanel.add(bottom, BorderLayout.SOUTH);</span>
+
+<span class="nc" id="L183">        return cardPanel;</span>
+    }
+
+    private void refreshCards() {
+<span class="nc bnc" id="L187" title="All 2 branches missed.">        if (controller == null) {</span>
+<span class="nc" id="L188">            return;</span>
+        }
+
+<span class="nc" id="L191">        playerCardsPanel.removeAll();</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">        for (Card c : controller.getPlayer().getHand().getCards()) {</span>
+<span class="nc" id="L193">            playerCardsPanel.add(createCardComponent(c));</span>
+<span class="nc" id="L194">        }</span>
+
+<span class="nc" id="L196">        dealerCardsPanel.removeAll();</span>
+<span class="nc bnc" id="L197" title="All 2 branches missed.">        for (Card c : controller.getDealer().getHand().getCards()) {</span>
+<span class="nc" id="L198">            dealerCardsPanel.add(createCardComponent(c));</span>
+<span class="nc" id="L199">        }</span>
+
+<span class="nc" id="L201">        playerCardsPanel.revalidate();</span>
+<span class="nc" id="L202">        playerCardsPanel.repaint();</span>
+<span class="nc" id="L203">        dealerCardsPanel.revalidate();</span>
+<span class="nc" id="L204">        dealerCardsPanel.repaint();</span>
+<span class="nc" id="L205">    }</span>
+
+    @Override
+    public void showMessage(String msg) {
+<span class="nc" id="L209">        statusLabel.setText(msg);</span>
+<span class="nc" id="L210">    }</span>
+
+    @Override
+    public void showCard(Player player, Card c) {
+<span class="nc" id="L214">        refreshCards();</span>
+<span class="nc" id="L215">    }</span>
+
+    @Override
+    public void updateScores(int playerValue, int dealerValue) {
+<span class="nc" id="L219">        playerScore.setText(&quot;Score: &quot; + playerValue);</span>
+<span class="nc" id="L220">        dealerScore.setText(&quot;Score: &quot; + dealerValue);</span>
+<span class="nc" id="L221">        refreshCards();</span>
+<span class="nc" id="L222">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,2 +1,14 @@
-/Users/arnausole/Uni/TQS/Practica1/tqs/src/main/java/cat/uab/model/Card.java
-/Users/arnausole/Uni/TQS/Practica1/tqs/src/main/java/cat/uab/Main.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/main/java/cat/uab/tqs/model/Player.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/main/java/cat/uab/tqs/mocks/MockShuffleRandom.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/main/java/cat/uab/tqs/mocks/MockGameView.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/main/java/cat/uab/tqs/view/ConsoleGameView.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/main/java/cat/uab/tqs/view/GUIView.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/main/java/cat/uab/tqs/view/GameView.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/main/java/cat/uab/tqs/model/Deck.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/main/java/cat/uab/tqs/Main.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/main/java/cat/uab/tqs/model/Hand.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/main/java/cat/uab/tqs/controller/GameController.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/main/java/cat/uab/tqs/model/Shuffler.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/main/java/cat/uab/tqs/model/Dealer.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/main/java/cat/uab/tqs/model/ShuffleRandom.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/main/java/cat/uab/tqs/model/Card.java

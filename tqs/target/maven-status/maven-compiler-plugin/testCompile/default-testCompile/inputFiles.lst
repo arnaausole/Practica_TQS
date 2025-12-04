@@ -1,1 +1,6 @@
-/Users/arnausole/Uni/TQS/Practica1/tqs/src/test/java/cat/uab/tqs/model/CardTest.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/test/java/cat/uab/tqs/controller/GameControllerTest.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/test/java/cat/uab/tqs/model/DeckTest.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/test/java/cat/uab/tqs/model/CardTest.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/test/java/cat/uab/tqs/model/HandTest.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/test/java/cat/uab/tqs/model/PlayerTest.java
+/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/src/test/java/cat/uab/tqs/model/DealerTest.java

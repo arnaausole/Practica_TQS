@@ -1,0 +1,13 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+tqs,cat.uab.tqs.model,Dealer,0,34,0,4,0,11,0,6,0,4
+tqs,cat.uab.tqs.model,Card,0,35,0,3,0,10,0,6,0,4
+tqs,cat.uab.tqs.model,ShuffleRandom,0,6,0,0,0,3,0,2,0,2
+tqs,cat.uab.tqs.model,Hand,0,78,0,14,0,19,0,13,0,6
+tqs,cat.uab.tqs.model,Deck,18,194,0,12,6,23,3,14,3,8
+tqs,cat.uab.tqs.model,Player,0,38,0,2,0,14,0,7,0,6
+tqs,cat.uab.tqs.mocks,MockGameView,0,30,0,0,0,12,0,4,0,4
+tqs,cat.uab.tqs.mocks,MockShuffleRandom,0,34,0,0,0,5,0,2,0,2
+tqs,cat.uab.tqs.view,GUIView,734,0,22,0,146,0,22,0,11,0
+tqs,cat.uab.tqs.view,ConsoleGameView,21,0,0,0,7,0,4,0,4,0
+tqs,cat.uab.tqs.controller,GameController,7,198,4,12,4,45,4,11,0,7
+tqs,cat.uab.tqs,Main,21,0,0,0,6,0,2,0,2,0

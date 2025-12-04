@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tqs</a> &gt; <a href="index.source.html" class="el_package">cat.uab.tqs.controller</a> &gt; <span class="el_source">GameController.java</span></div><h1>GameController.java</h1><pre class="source lang-java linenums">package cat.uab.tqs.controller;
+
+import cat.uab.tqs.model.*;
+import cat.uab.tqs.view.GameView;
+
+public class GameController {
+
+    private GameView view;
+    private Deck deck;
+    private Player player;
+    private Dealer dealer;
+
+<span class="fc" id="L13">    public GameController(GameView view, Deck deck) {</span>
+<span class="fc" id="L14">        this.view = view;</span>
+<span class="fc" id="L15">        this.deck = deck;</span>
+<span class="fc" id="L16">        this.player = new Player();</span>
+<span class="fc" id="L17">        this.dealer = new Dealer();</span>
+<span class="fc" id="L18">    }</span>
+
+    public Player getPlayer() {
+<span class="fc" id="L21">        return player;</span>
+    }
+
+    public Dealer getDealer() {
+<span class="fc" id="L25">        return dealer;</span>
+    }
+
+    public void startGame() {
+
+<span class="fc" id="L30">        player.reset();</span>
+<span class="fc" id="L31">        dealer.reset();</span>
+<span class="fc" id="L32">        deck = new Deck();</span>
+
+<span class="fc" id="L34">        player.getHand().addCard(deck.drawCard());</span>
+<span class="fc" id="L35">        player.getHand().addCard(deck.drawCard());</span>
+
+<span class="fc" id="L37">        dealer.getHand().addCard(deck.drawCard());</span>
+<span class="fc" id="L38">        dealer.getHand().addCard(deck.drawCard());</span>
+
+<span class="fc" id="L40">        view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());</span>
+<span class="fc" id="L41">        view.showMessage(&quot;New game started. Your turn!&quot;);</span>
+<span class="fc" id="L42">    }</span>
+
+    public void playerHit() {
+
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (player.isStanding()) {</span>
+<span class="nc" id="L47">            return;</span>
+        }
+
+<span class="fc" id="L50">        Card c = deck.drawCard();</span>
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if (c == null) {</span>
+<span class="nc" id="L52">            view.showMessage(&quot;No more cards in the deck.&quot;);</span>
+<span class="nc" id="L53">            return;</span>
+        }
+
+<span class="fc" id="L56">        player.hit(c);</span>
+<span class="fc" id="L57">        view.showCard(player, c);</span>
+<span class="fc" id="L58">        view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());</span>
+
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (player.getHand().isBust()) {</span>
+<span class="fc" id="L61">            view.showMessage(&quot;Player busts.&quot;);</span>
+        }
+<span class="fc" id="L63">    }</span>
+
+    public void playerStand() {
+
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (player.isStanding()) {</span>
+<span class="nc" id="L68">            return;</span>
+        }
+
+<span class="fc" id="L71">        player.stand();</span>
+<span class="fc" id="L72">        dealer.play(deck);</span>
+
+<span class="fc" id="L74">        view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());</span>
+<span class="fc" id="L75">        determineWinner();</span>
+<span class="fc" id="L76">    }</span>
+
+    public void determineWinner() {
+
+<span class="fc" id="L80">        int p = player.getHand().getValue();</span>
+<span class="fc" id="L81">        int d = dealer.getHand().getValue();</span>
+
+<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (player.getHand().isBust()) {</span>
+<span class="fc" id="L84">            view.showMessage(&quot;Dealer wins.&quot;);</span>
+        }
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        else if (dealer.getHand().isBust()) {</span>
+<span class="fc" id="L87">            view.showMessage(&quot;Player wins.&quot;);</span>
+        }
+<span class="fc bfc" id="L89" title="All 2 branches covered.">        else if (p &gt; d) {</span>
+<span class="fc" id="L90">            view.showMessage(&quot;Player wins.&quot;);</span>
+        }
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        else if (p &lt; d) {</span>
+<span class="fc" id="L93">            view.showMessage(&quot;Dealer wins.&quot;);</span>
+        }
+        else {
+<span class="fc" id="L96">            view.showMessage(&quot;Tie.&quot;);</span>
+        }
+<span class="fc" id="L98">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
