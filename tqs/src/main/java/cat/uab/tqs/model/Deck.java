@@ -34,6 +34,8 @@ public class Deck {
         }
         // totes les cartes dins del domini --> aixo serveix per quan dealer/player fan addCart (es fa drawcard de la baralla)
         // i aixi ens assegurem que siguin cartes vàlides a la hora de jugar
+
+        // LOOP TESTING ANUINAT (fet al test tambe)
         for (Card c : cards) {
             if (c == null) {
                 return false;
@@ -175,4 +177,28 @@ public class Deck {
 
         assert invariant();
     }
+
+    // Loop aniuat: comprova si hi ha alguna carta duplicada a la baralla
+    public boolean hasDuplicateCards() {
+        
+        assert invariant();
+
+        for (int i = 0; i < cards.size(); i++) {
+            Card c1 = cards.get(i);
+            for (int j = i + 1; j < cards.size(); j++) {
+                Card c2 = cards.get(j);
+                if (c1.getSuit().equals(c2.getSuit()) &&
+                    c1.getRank().equals(c2.getRank())) {
+
+                    assert invariant();
+                    return true;
+                }
+            }
+        }
+
+        assert invariant();
+        return false;
+    }
+
+
 }
