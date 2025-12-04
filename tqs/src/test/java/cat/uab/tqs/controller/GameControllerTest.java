@@ -27,10 +27,19 @@ public class GameControllerTest {
 
         controller.startGame();
 
+        // mides de les mans
         assertEquals(2, controller.getPlayer().getHand().getCards().size());
         assertEquals(2, controller.getDealer().getHand().getCards().size());
+
+        // scores > 0
         assertTrue(view.lastPlayerScore > 0);
         assertTrue(view.lastDealerScore > 0);
+
+        // el dealer ha de quedar amagat al començar la partida
+        assertTrue(view.dealerHidden);
+
+        // msg inicial correcte
+        assertEquals("New game started. Your turn!", view.lastMessage);
     }
 
     @Test
@@ -44,6 +53,9 @@ public class GameControllerTest {
 
         assertEquals(before + 1, controller.getPlayer().getHand().getCards().size());
         assertNotNull(view.lastShownCard);
+
+        // dealer ha de tenir 1 carta amagada
+        assertTrue(view.dealerHidden);
 
         // Cas 2: Si player fa blackjack natural, no pot fer hit
 
@@ -70,6 +82,9 @@ public class GameControllerTest {
 
         controller.startGame();
 
+        // abans de plantarse, la carta del dealer ha destar oculta
+        assertTrue(view.dealerHidden);
+
         // Cas 1: el jugador es planta
 
         controller.playerStand();
@@ -78,7 +93,9 @@ public class GameControllerTest {
         // Cas 2: el dealer ha jugat i el seu valor és >= 17
         assertTrue(controller.getDealer().getHand().getValue() >= 17);
 
-    
+        //dps de plantarse la carta del dealer es descobreix
+        assertFalse(view.dealerHidden);
+        
         assertTrue(view.lastPlayerScore > 0);
         assertTrue(view.lastDealerScore > 0);
     }
