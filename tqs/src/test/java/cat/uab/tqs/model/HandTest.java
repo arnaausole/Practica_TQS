@@ -4,6 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+// per fer data-driven tests
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+
+
 import org.junit.jupiter.api.Test;
 
 public class HandTest {
@@ -192,5 +197,42 @@ public class HandTest {
         hand.addCard(new Card("Spades", "5")); // !=2 cartes, !=21
         assertFalse(hand.isBlackjack());
 
+    }
+
+
+    /**
+     * Data-Driven test:
+     *   - Entrades: conjunt de ranks, separat per espais
+     *   - Sortides: valor total, si es bust, si es blackjack
+     *
+     *  Cobreix:
+     *   - 0 asos, 1 as, molts asos
+     *   - casos de frontera (21, >21, +21)
+     *   - blackjack natural vs 21 amb 3 cartes
+     */
+
+    @ParameterizedTest(name = "Mà \"{0}\" → value={1}, bust={2}, blackjack={3}")
+    @CsvFileSource(
+        resources = "/hand_scenarios.csv",
+        numLinesToSkip = 1,
+        delimiter = ';'
+    )
+    void testHandBehaviour_DataDriven(String cards, int expectedValue, boolean expectedBust, boolean expectedBlackjack) {
+
+        Hand hand = new Hand();
+
+        // fem la ma a partir dels ranks  (nums) (el pal no afecta)
+        for (String rank : cards.split(" ")) {
+
+            if (!rank.isBlank()) {
+
+                hand.addCard(new Card("Hearts", rank));
+            }
+        }
+
+        // comprovacio dels 3 metodes de Hand
+        assertEquals(expectedValue, hand.getValue(), "Valor inesperat per a la mà " + cards);
+        assertEquals(expectedBust, hand.isBust(), "Bust inesperat per a la mà " + cards);
+        assertEquals(expectedBlackjack, hand.isBlackjack(), "Blackjack inesperat per a la mà " + cards);
     }
 }
