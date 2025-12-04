@@ -3,72 +3,177 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Deck {
+<span class="fc" id="L6">public class Deck {</span>
 
     private List&lt;Card&gt; cards;
     private Shuffler shuffler;
 
-<span class="fc" id="L11">    public Deck(Shuffler shuffler) {</span>
-<span class="fc" id="L12">        this.shuffler = shuffler;</span>
-<span class="fc" id="L13">        cards = new ArrayList&lt;&gt;();</span>
+    // el palo es valid
+    private boolean isValidSuit(String suit) {
+<span class="pc bfc" id="L13" title="All 2 branches covered.">        return &quot;Hearts&quot;.equals(suit)</span>
+<span class="fc bfc" id="L14" title="All 2 branches covered.">            || &quot;Diamonds&quot;.equals(suit)</span>
+<span class="fc bfc" id="L15" title="All 2 branches covered.">            || &quot;Clubs&quot;.equals(suit)</span>
+<span class="pc bpc" id="L16" title="1 of 2 branches missed.">            || &quot;Spades&quot;.equals(suit);</span>
+    }
 
-<span class="fc" id="L15">        String[] suits = {&quot;Hearts&quot;, &quot;Diamonds&quot;, &quot;Clubs&quot;, &quot;Spades&quot;};</span>
-<span class="fc" id="L16">        String[] ranks = {&quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;, &quot;J&quot;, &quot;Q&quot;, &quot;K&quot;, &quot;A&quot;};</span>
+    // el numero es valid
+    private boolean isValidRank(String rank) {
+<span class="pc bfc" id="L21" title="All 6 branches covered.">        return &quot;2&quot;.equals(rank) || &quot;3&quot;.equals(rank) || &quot;4&quot;.equals(rank)</span>
+<span class="fc bfc" id="L22" title="All 6 branches covered.">            || &quot;5&quot;.equals(rank) || &quot;6&quot;.equals(rank) || &quot;7&quot;.equals(rank)</span>
+<span class="fc bfc" id="L23" title="All 6 branches covered.">            || &quot;8&quot;.equals(rank) || &quot;9&quot;.equals(rank) || &quot;10&quot;.equals(rank)</span>
+<span class="fc bfc" id="L24" title="All 6 branches covered.">            || &quot;J&quot;.equals(rank) || &quot;Q&quot;.equals(rank) || &quot;K&quot;.equals(rank)</span>
+<span class="pc bpc" id="L25" title="1 of 2 branches missed.">            || &quot;A&quot;.equals(rank);</span>
+    }
 
-<span class="fc bfc" id="L18" title="All 2 branches covered.">        for (String suit : suits) {</span>
-<span class="fc bfc" id="L19" title="All 2 branches covered.">            for (String rank : ranks) {</span>
-<span class="fc" id="L20">                cards.add(new Card(suit, rank));</span>
+    private boolean invariant() {
+<span class="pc bpc" id="L29" title="2 of 4 branches missed.">        if (cards == null || shuffler == null) {</span>
+<span class="nc" id="L30">            return false;</span>
+        }
+<span class="pc bpc" id="L32" title="2 of 4 branches missed.">        if (cards.size() &lt; 0 || cards.size() &gt; 52) {</span>
+<span class="nc" id="L33">            return false;</span>
+        }
+        // totes les cartes dins del domini --&gt; aixo serveix per quan dealer/player fan addCart (es fa drawcard de la baralla)
+        // i aixi ens assegurem que siguin cartes vàlides a la hora de jugar
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        for (Card c : cards) {</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">            if (c == null) {</span>
+<span class="nc" id="L39">                return false;</span>
+            }
+<span class="pc bpc" id="L41" title="2 of 4 branches missed.">            if (!isValidSuit(c.getSuit()) || !isValidRank(c.getRank())) {</span>
+<span class="nc" id="L42">                return false;</span>
+            }
+        }
+<span class="fc" id="L45">        return true;</span>
+    }
+
+
+<span class="fc" id="L49">    public Deck(Shuffler shuffler) {</span>
+
+        //precondicio
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        assert shuffler != null;</span>
+
+<span class="fc" id="L54">        this.shuffler = shuffler;</span>
+<span class="fc" id="L55">        cards = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L57">        String[] suits = {&quot;Hearts&quot;, &quot;Diamonds&quot;, &quot;Clubs&quot;, &quot;Spades&quot;};</span>
+<span class="fc" id="L58">        String[] ranks = {&quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;, &quot;J&quot;, &quot;Q&quot;, &quot;K&quot;, &quot;A&quot;};</span>
+
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        for (String suit : suits) {</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">            for (String rank : ranks) {</span>
+<span class="fc" id="L62">                cards.add(new Card(suit, rank));</span>
             }
         }
 
-<span class="fc" id="L24">        this.shuffler.shuffle(cards);</span>
-<span class="fc" id="L25">    }</span>
+<span class="fc" id="L66">        this.shuffler.shuffle(cards);</span>
+
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        assert invariant();</span>
+<span class="fc" id="L69">    }</span>
 
     public Deck() {
-<span class="fc" id="L28">        this(new ShuffleRandom());</span>
-<span class="fc" id="L29">    }</span>
+<span class="fc" id="L72">        this(new ShuffleRandom());</span>
+<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        assert invariant();</span>
+<span class="fc" id="L74">    }</span>
 
     public int size() {
-<span class="fc" id="L32">        return cards.size();</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">        assert invariant();</span>
+
+<span class="fc" id="L79">        return cards.size();</span>
+
     }
 
     public boolean isEmpty() {
-<span class="fc" id="L36">        return cards.isEmpty();</span>
+
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        assert invariant();</span>
+
+<span class="fc" id="L87">        return cards.isEmpty();</span>
     }
 
     public boolean contains(Card c) {
-<span class="fc bfc" id="L40" title="All 2 branches covered.">        for (Card card : cards) {</span>
-<span class="fc bfc" id="L41" title="All 2 branches covered.">            if (card.getRank().equals(c.getRank()) &amp;&amp;</span>
-<span class="fc bfc" id="L42" title="All 2 branches covered.">                card.getSuit().equals(c.getSuit())) {</span>
-<span class="fc" id="L43">                return true;</span>
+
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        assert invariant();</span>
+
+        //precond
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        assert c != null;</span>
+
+<span class="fc bfc" id="L97" title="All 2 branches covered.">        for (Card card : cards) {</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">            if (card.getRank().equals(c.getRank()) &amp;&amp;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">                card.getSuit().equals(c.getSuit())) {</span>
+
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">                assert invariant();</span>
+<span class="fc" id="L102">                return true;</span>
             }
-<span class="fc" id="L45">        }</span>
-<span class="fc" id="L46">        return false;</span>
+        }
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        assert invariant();</span>
+<span class="fc" id="L106">        return false;</span>
     }
 
     public Card getCardAt(int index) {
-<span class="fc" id="L50">        return cards.get(index);</span>
+
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">        assert invariant();</span>
+
+        //pre cond
+<span class="pc bpc" id="L114" title="2 of 4 branches missed.">        assert index &gt;= 0 &amp;&amp; index &lt; cards.size();</span>
+
+<span class="fc" id="L116">        return cards.get(index);</span>
     }
 
     public List&lt;Card&gt; getCards() {
-<span class="fc" id="L54">        return cards;</span>
+
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">        assert invariant();</span>
+
+<span class="fc" id="L123">        return cards;</span>
     }
 
     public Card drawCard() {
-<span class="fc bfc" id="L58" title="All 2 branches covered.">        return cards.isEmpty() ? null : cards.remove(0);</span>
+
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">        assert invariant();</span>
+
+<span class="fc" id="L130">        int oldSize = cards.size();</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        Card result = cards.isEmpty() ? null : cards.remove(0);</span>
+
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (oldSize == 0) {</span>
+
+            // post cond: quan estava buida, segueix buida i retorna null
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">            assert result == null;</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">            assert cards.size() == 0;</span>
+        } else {
+
+            // post cond: quan no estava buida, mida baixa  1 i la carta ja no hi es
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">            assert result != null;</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">            assert cards.size() == oldSize - 1;</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">            assert !contains(result);</span>
+        }
+
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">        assert invariant();</span>
+<span class="fc" id="L147">        return result;</span>
     }
 
     public void shuffle() {
-<span class="nc" id="L62">        shuffler.shuffle(cards);</span>
-<span class="nc" id="L63">    }</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">        assert invariant();</span>
+
+<span class="nc" id="L153">        int oldSize = cards.size();</span>
+<span class="nc" id="L154">        shuffler.shuffle(cards);</span>
+
+        // post cond
+<span class="nc bnc" id="L157" title="All 2 branches missed.">        assert cards.size() == oldSize;</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">        assert invariant();</span>
+
+<span class="nc" id="L160">    }</span>
 
     public Shuffler getShuffler() {
-<span class="nc" id="L66">        return shuffler;</span>
+
+<span class="nc bnc" id="L164" title="All 2 branches missed.">        assert invariant();</span>
+<span class="nc" id="L165">        return shuffler;</span>
     }
 
     public void setShuffler(Shuffler shuffler) {
-<span class="nc" id="L70">        this.shuffler = shuffler;</span>
-<span class="nc" id="L71">        this.shuffler.shuffle(cards);</span>
-<span class="nc" id="L72">    }</span>
+
+<span class="nc bnc" id="L170" title="All 2 branches missed.">        assert invariant();</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        assert shuffler != null;</span>
+
+<span class="nc" id="L173">        this.shuffler = shuffler;</span>
+<span class="nc" id="L174">        this.shuffler.shuffle(cards);</span>
+
+<span class="nc bnc" id="L176" title="All 2 branches missed.">        assert invariant();</span>
+<span class="nc" id="L177">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

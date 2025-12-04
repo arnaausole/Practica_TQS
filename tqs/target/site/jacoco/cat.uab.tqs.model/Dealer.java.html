@@ -1,30 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Dealer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tqs</a> &gt; <a href="index.source.html" class="el_package">cat.uab.tqs.model</a> &gt; <span class="el_source">Dealer.java</span></div><h1>Dealer.java</h1><pre class="source lang-java linenums">package cat.uab.tqs.model;
 
-public class Dealer {
+<span class="fc" id="L3">public class Dealer {</span>
 
     private Hand hand;
 
-<span class="fc" id="L7">    public Dealer() {</span>
-<span class="fc" id="L8">        hand = new Hand();</span>
-<span class="fc" id="L9">    }</span>
+    private boolean invariant() {
+<span class="pc bpc" id="L8" title="1 of 2 branches missed.">        return hand != null;</span>
+    }
+
+
+<span class="fc" id="L12">    public Dealer() {</span>
+<span class="fc" id="L13">        hand = new Hand();</span>
+
+<span class="pc bpc" id="L15" title="1 of 2 branches missed.">        assert invariant();</span>
+<span class="fc" id="L16">    }</span>
 
     public Hand getHand() {
-<span class="fc" id="L12">        return hand;</span>
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">        assert invariant();</span>
+<span class="fc" id="L20">        return hand;</span>
     }
 
     public void play(Deck deck) {
 
-<span class="fc bfc" id="L17" title="All 4 branches covered.">        while (hand.getValue() &lt; 17 &amp;&amp; !deck.isEmpty()) {</span>
+<span class="pc bpc" id="L25" title="1 of 2 branches missed.">         assert invariant();</span>
+         //precond
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">         assert deck != null;</span>
 
-<span class="fc" id="L19">            Card c = deck.drawCard();</span>
-<span class="fc" id="L20">            hand.addCard(c);</span>
-<span class="fc" id="L21">        }</span>
+
+<span class="fc bfc" id="L30" title="All 4 branches covered.">        while (hand.getValue() &lt; 17 &amp;&amp; !deck.isEmpty()) {</span>
+
+<span class="fc" id="L32">            Card c = deck.drawCard();</span>
+<span class="fc" id="L33">            hand.addCard(c);</span>
+        }
+
+        //postcond
+<span class="pc bpc" id="L37" title="1 of 4 branches missed.">        assert hand.getValue() &gt;= 17 || deck.isEmpty();</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        assert invariant();</span>
         
-<span class="fc" id="L23">    }</span>
+<span class="fc" id="L40">    }</span>
 
     public void reset() {
-<span class="fc" id="L26">        hand = new Hand();</span>
-<span class="fc" id="L27">    }</span>
+
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        assert invariant();</span>
+
+
+<span class="fc" id="L47">        hand = new Hand();</span>
+
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        assert invariant();</span>
+
+        //postcond
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        assert hand.getCards().isEmpty();</span>
+
+<span class="fc" id="L54">    }</span>
 
 
 }

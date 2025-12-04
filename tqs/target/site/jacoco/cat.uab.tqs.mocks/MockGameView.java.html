@@ -3,30 +3,33 @@
 import cat.uab.tqs.model.*;
 import cat.uab.tqs.view.GameView;
 
-// aquest mock imita la funcionalitat de ConsoleGameView,
-// en contes de mostrar els missatges per consola, sels guarda en variables
-// per poder realitzar correctament els testos
-<span class="fc" id="L9">public class MockGameView implements GameView {</span>
+<span class="fc" id="L6">public class MockGameView implements GameView {</span>
 
-<span class="fc" id="L11">    public String lastMessage = &quot;&quot;;</span>
-<span class="fc" id="L12">    public int lastPlayerScore = -1;</span>
-<span class="fc" id="L13">    public int lastDealerScore = -1;</span>
-<span class="fc" id="L14">    public Card lastShownCard = null;</span>
+<span class="fc" id="L8">    public String lastMessage = &quot;&quot;;</span>
+<span class="fc" id="L9">    public int lastPlayerScore = -1;</span>
+<span class="fc" id="L10">    public int lastDealerScore = -1;</span>
+<span class="fc" id="L11">    public Card lastShownCard = null;</span>
+<span class="fc" id="L12">    public boolean dealerHidden = false;</span>
 
     @Override
     public void showMessage(String msg) {
-<span class="fc" id="L18">        lastMessage = msg;</span>
-<span class="fc" id="L19">    }</span>
+<span class="fc" id="L16">        lastMessage = msg;</span>
+<span class="fc" id="L17">    }</span>
 
     @Override
     public void showCard(Player player, Card c) {
-<span class="fc" id="L23">        lastShownCard = c;</span>
-<span class="fc" id="L24">    }</span>
+<span class="fc" id="L21">        lastShownCard = c;</span>
+<span class="fc" id="L22">    }</span>
 
     @Override
     public void updateScores(int playerValue, int dealerValue) {
-<span class="fc" id="L28">        lastPlayerScore = playerValue;</span>
-<span class="fc" id="L29">        lastDealerScore = dealerValue;</span>
-<span class="fc" id="L30">    }</span>
+<span class="fc" id="L26">        lastPlayerScore = playerValue;</span>
+<span class="fc" id="L27">        lastDealerScore = dealerValue;</span>
+<span class="fc" id="L28">    }</span>
+
+    @Override
+    public void setDealerHidden(boolean hidden) {
+<span class="fc" id="L32">        dealerHidden = hidden;</span>
+<span class="fc" id="L33">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

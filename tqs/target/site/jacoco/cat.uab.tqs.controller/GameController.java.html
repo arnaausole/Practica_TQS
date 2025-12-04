@@ -3,98 +3,180 @@
 import cat.uab.tqs.model.*;
 import cat.uab.tqs.view.GameView;
 
-public class GameController {
+<span class="fc" id="L6">public class GameController {</span>
 
     private GameView view;
     private Deck deck;
     private Player player;
     private Dealer dealer;
 
-<span class="fc" id="L13">    public GameController(GameView view, Deck deck) {</span>
-<span class="fc" id="L14">        this.view = view;</span>
-<span class="fc" id="L15">        this.deck = deck;</span>
-<span class="fc" id="L16">        this.player = new Player();</span>
-<span class="fc" id="L17">        this.dealer = new Dealer();</span>
-<span class="fc" id="L18">    }</span>
+    private boolean invariant() {
+
+<span class="pc bpc" id="L15" title="4 of 8 branches missed.">        return view != null &amp;&amp; deck != null &amp;&amp; player != null &amp;&amp; dealer != null;</span>
+    }
+
+<span class="fc" id="L18">    public GameController(GameView view, Deck deck) {</span>
+
+        //precond
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">        assert view != null;</span>
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">        assert deck != null;</span>
+
+
+<span class="fc" id="L25">        this.view = view;</span>
+<span class="fc" id="L26">        this.deck = deck;</span>
+<span class="fc" id="L27">        this.player = new Player();</span>
+<span class="fc" id="L28">        this.dealer = new Dealer();</span>
+
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">        assert invariant();</span>
+<span class="fc" id="L31">    }</span>
 
     public Player getPlayer() {
-<span class="fc" id="L21">        return player;</span>
+
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        assert invariant();</span>
+
+<span class="fc" id="L37">        return player;</span>
     }
 
     public Dealer getDealer() {
-<span class="fc" id="L25">        return dealer;</span>
+
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        assert invariant();</span>
+<span class="fc" id="L43">        return dealer;</span>
     }
 
     public void startGame() {
 
-<span class="fc" id="L30">        player.reset();</span>
-<span class="fc" id="L31">        dealer.reset();</span>
-<span class="fc" id="L32">        deck = new Deck();</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        assert invariant(); // important</span>
 
-<span class="fc" id="L34">        player.getHand().addCard(deck.drawCard());</span>
-<span class="fc" id="L35">        player.getHand().addCard(deck.drawCard());</span>
+<span class="fc" id="L50">        player.reset();</span>
+<span class="fc" id="L51">        dealer.reset();</span>
+<span class="fc" id="L52">        deck = new Deck();</span>
 
-<span class="fc" id="L37">        dealer.getHand().addCard(deck.drawCard());</span>
-<span class="fc" id="L38">        dealer.getHand().addCard(deck.drawCard());</span>
+        //precond: per començar el joc be
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        assert player.getHand().getCards().isEmpty();</span>
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        assert dealer.getHand().getCards().isEmpty();</span>
 
-<span class="fc" id="L40">        view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());</span>
-<span class="fc" id="L41">        view.showMessage(&quot;New game started. Your turn!&quot;);</span>
-<span class="fc" id="L42">    }</span>
+
+<span class="fc" id="L59">        player.getHand().addCard(deck.drawCard());</span>
+<span class="fc" id="L60">        player.getHand().addCard(deck.drawCard());</span>
+
+<span class="fc" id="L62">        dealer.getHand().addCard(deck.drawCard());</span>
+<span class="fc" id="L63">        dealer.getHand().addCard(deck.drawCard());</span>
+
+        //post cond: per jugar be
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        assert player.getHand().getCards().size() == 2;</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        assert dealer.getHand().getCards().size() == 2;</span>
+
+        // amaguem la carta del dealer (per evitar manipular el joc)
+<span class="fc" id="L70">        view.setDealerHidden(true);</span>
+<span class="fc" id="L71">        view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());</span>
+<span class="fc" id="L72">        view.showMessage(&quot;New game started. Your turn!&quot;);</span>
+
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        assert invariant();</span>
+<span class="fc" id="L75">    }</span>
 
     public void playerHit() {
 
-<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (player.isStanding()) {</span>
-<span class="nc" id="L47">            return;</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        assert invariant();</span>
+
+<span class="pc bpc" id="L81" title="1 of 4 branches missed.">        if (player.isStanding() || player.getHand().isBlackjack()) {</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">            assert invariant();</span>
+<span class="fc" id="L83">            return;</span>
         }
 
-<span class="fc" id="L50">        Card c = deck.drawCard();</span>
-<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if (c == null) {</span>
-<span class="nc" id="L52">            view.showMessage(&quot;No more cards in the deck.&quot;);</span>
-<span class="nc" id="L53">            return;</span>
+<span class="fc" id="L86">        Card c = deck.drawCard();</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (c == null) {</span>
+<span class="nc" id="L88">            view.showMessage(&quot;No more cards in the deck.&quot;);</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">            assert invariant();</span>
+<span class="nc" id="L90">            return;</span>
         }
 
-<span class="fc" id="L56">        player.hit(c);</span>
-<span class="fc" id="L57">        view.showCard(player, c);</span>
-<span class="fc" id="L58">        view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());</span>
+<span class="fc" id="L93">        int oldSize = player.getHand().getCards().size();</span>
 
-<span class="pc bpc" id="L60" title="1 of 2 branches missed.">        if (player.getHand().isBust()) {</span>
-<span class="fc" id="L61">            view.showMessage(&quot;Player busts.&quot;);</span>
+<span class="fc" id="L95">        player.hit(c);</span>
+<span class="fc" id="L96">        view.showCard(player, c);</span>
+<span class="fc" id="L97">        view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());</span>
+
+        //postcond
+
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        assert player.getHand().getCards().size() == oldSize + 1;</span>
+
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        if (player.getHand().isBust()) {</span>
+
+<span class="nc" id="L105">            view.setDealerHidden(false);</span>
+<span class="nc" id="L106">            view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());</span>
+<span class="nc" id="L107">            view.showMessage(&quot;Player busts.&quot;);</span>
         }
-<span class="fc" id="L63">    }</span>
+
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        assert invariant();</span>
+<span class="fc" id="L111">    }</span>
 
     public void playerStand() {
 
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (player.isStanding()) {</span>
-<span class="nc" id="L68">            return;</span>
+<span class="pc bpc" id="L115" title="1 of 2 branches missed.">        assert invariant();</span>
+
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (player.isStanding()) {</span>
+
+<span class="nc bnc" id="L119" title="All 2 branches missed.">            assert invariant();</span>
+<span class="nc" id="L120">            return;</span>
         }
 
-<span class="fc" id="L71">        player.stand();</span>
-<span class="fc" id="L72">        dealer.play(deck);</span>
+<span class="fc" id="L123">        player.stand();</span>
+<span class="fc" id="L124">        dealer.play(deck);</span>
 
-<span class="fc" id="L74">        view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());</span>
-<span class="fc" id="L75">        determineWinner();</span>
-<span class="fc" id="L76">    }</span>
+        //mostrem la carta del dealer
+<span class="fc" id="L127">        view.setDealerHidden(false);</span>
+
+<span class="fc" id="L129">        view.updateScores(player.getHand().getValue(), dealer.getHand().getValue());</span>
+<span class="fc" id="L130">        determineWinner();</span>
+
+        //postcond
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">        assert player.isStanding();</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">        assert invariant();</span>
+
+<span class="fc" id="L136">    }</span>
 
     public void determineWinner() {
 
-<span class="fc" id="L80">        int p = player.getHand().getValue();</span>
-<span class="fc" id="L81">        int d = dealer.getHand().getValue();</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">        assert invariant();</span>
 
-<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (player.getHand().isBust()) {</span>
-<span class="fc" id="L84">            view.showMessage(&quot;Dealer wins.&quot;);</span>
+        // si un te 21 amb 3 cartes i laltre te blackjack (A + 10), guanya el que te blackjack natural
+
+<span class="fc" id="L144">        int p = player.getHand().getValue();</span>
+<span class="fc" id="L145">        int d = dealer.getHand().getValue();</span>
+
+<span class="fc" id="L147">        boolean playerBJ = player.getHand().isBlackjack();</span>
+<span class="fc" id="L148">        boolean dealerBJ = dealer.getHand().isBlackjack();</span>
+
+        // casos de blackjack natural
+<span class="fc bfc" id="L151" title="All 4 branches covered.">        if (playerBJ &amp;&amp; dealerBJ) {</span>
+<span class="fc" id="L152">            view.showMessage(&quot;Tie. Both have blackjack.&quot;);</span>
+<span class="fc" id="L153">            return;</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        } else if (playerBJ) {</span>
+<span class="fc" id="L155">            view.showMessage(&quot;Player wins with blackjack.&quot;);</span>
+<span class="fc" id="L156">            return;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        } else if (dealerBJ) {</span>
+<span class="fc" id="L158">            view.showMessage(&quot;Dealer wins with blackjack.&quot;);</span>
+<span class="fc" id="L159">            return;</span>
         }
-<span class="fc bfc" id="L86" title="All 2 branches covered.">        else if (dealer.getHand().isBust()) {</span>
-<span class="fc" id="L87">            view.showMessage(&quot;Player wins.&quot;);</span>
-        }
-<span class="fc bfc" id="L89" title="All 2 branches covered.">        else if (p &gt; d) {</span>
-<span class="fc" id="L90">            view.showMessage(&quot;Player wins.&quot;);</span>
-        }
-<span class="fc bfc" id="L92" title="All 2 branches covered.">        else if (p &lt; d) {</span>
-<span class="fc" id="L93">            view.showMessage(&quot;Dealer wins.&quot;);</span>
-        }
+
+        // cas sense blackjack
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        if (player.getHand().isBust()) {</span>
+<span class="fc" id="L164">            view.showMessage(&quot;Dealer wins.&quot;);</span>
+<span class="fc" id="L165">        }</span>
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        else if (dealer.getHand().isBust()) {</span>
+<span class="fc" id="L167">            view.showMessage(&quot;Player wins.&quot;);</span>
+<span class="fc" id="L168">        }</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        else if (p &gt; d) {</span>
+<span class="fc" id="L170">            view.showMessage(&quot;Player wins.&quot;);</span>
+<span class="fc" id="L171">        }</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        else if (p &lt; d) {</span>
+<span class="fc" id="L173">            view.showMessage(&quot;Dealer wins.&quot;);</span>
+<span class="fc" id="L174">        }</span>
         else {
-<span class="fc" id="L96">            view.showMessage(&quot;Tie.&quot;);</span>
+<span class="fc" id="L176">            view.showMessage(&quot;Tie.&quot;);</span>
         }
-<span class="fc" id="L98">    }</span>
+
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">        assert invariant();</span>
+<span class="fc" id="L180">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

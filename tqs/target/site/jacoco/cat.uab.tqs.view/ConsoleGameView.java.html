@@ -4,19 +4,33 @@ import cat.uab.tqs.model.*;
 
 <span class="nc" id="L5">public class ConsoleGameView implements GameView {</span>
 
+<span class="nc" id="L7">    private boolean dealerHidden = false;</span>
+
     @Override
     public void showMessage(String msg) {
-<span class="nc" id="L9">        System.out.println(msg);</span>
-<span class="nc" id="L10">    }</span>
+<span class="nc" id="L11">        System.out.println(msg);</span>
+<span class="nc" id="L12">    }</span>
 
     @Override
     public void showCard(Player player, Card c) {
-<span class="nc" id="L14">        System.out.println(&quot;Card: &quot; + c.getRank() + &quot; of &quot; + c.getSuit());</span>
-<span class="nc" id="L15">    }</span>
+        
+<span class="nc" id="L17">        System.out.println(&quot;Card drawn: &quot; + c.getRank() + &quot; of &quot; + c.getSuit());</span>
+<span class="nc" id="L18">    }</span>
 
     @Override
     public void updateScores(int playerValue, int dealerValue) {
-<span class="nc" id="L19">        System.out.println(&quot;Player: &quot; + playerValue + &quot;, Dealer: &quot; + dealerValue);</span>
-<span class="nc" id="L20">    }</span>
+
+<span class="nc bnc" id="L23" title="All 2 branches missed.">        if (dealerHidden) {</span>
+            // si esta ocult no revelem la puntuacio del dealer
+<span class="nc" id="L25">            System.out.println(&quot;Player: &quot; + playerValue + &quot;, Dealer: [hidden]&quot;);</span>
+<span class="nc" id="L26">        } else {</span>
+<span class="nc" id="L27">            System.out.println(&quot;Player: &quot; + playerValue + &quot;, Dealer: &quot; + dealerValue);</span>
+        }
+<span class="nc" id="L29">    }</span>
+
+    @Override
+    public void setDealerHidden(boolean hidden) {
+<span class="nc" id="L33">        this.dealerHidden = hidden;</span>
+<span class="nc" id="L34">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

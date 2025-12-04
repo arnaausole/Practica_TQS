@@ -17,6 +17,14 @@ class CardTest {
         Card card2 = new Card("Clubs", "10");
         assertEquals("Clubs", card2.getSuit());
         assertEquals("10", card2.getRank());
+
+        // particio invalida (suit null)
+        assertThrows(AssertionError.class, () -> new Card(null, "A"));
+
+        //particio invalida (rank null)
+        assertThrows(AssertionError.class, () -> new Card("Hearts", null));
+
+
     }
 
 

@@ -2,29 +2,57 @@
 
 
 
-public class Card {
+<span class="fc" id="L5">public class Card {</span>
     private String suit;
     private String rank;
 
-<span class="fc" id="L9">    public Card(String suit, String rank) {</span>
-<span class="fc" id="L10">        this.suit = suit;</span>
-<span class="fc" id="L11">        this.rank = rank;</span>
-<span class="fc" id="L12">    }</span>
+    private boolean invariant() {
+
+<span class="pc bpc" id="L11" title="2 of 4 branches missed.">        return suit != null &amp;&amp; rank != null;</span>
+    }
+
+<span class="fc" id="L14">    public Card(String suit, String rank) {</span>
+
+        //precondicions
+
+<span class="pc bpc" id="L18" title="1 of 2 branches missed.">        assert suit != null;</span>
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">        assert rank != null;</span>
+
+<span class="fc" id="L21">        this.suit = suit;</span>
+<span class="fc" id="L22">        this.rank = rank;</span>
+
+<span class="pc bpc" id="L24" title="1 of 2 branches missed.">        assert invariant();</span>
+
+<span class="fc" id="L26">    }</span>
 
     public String getSuit() {
-<span class="fc" id="L15">        return suit;</span>
+<span class="pc bpc" id="L29" title="1 of 2 branches missed.">        assert invariant();</span>
+
+<span class="fc" id="L31">        return suit;</span>
     }
 
     public String getRank() {
-<span class="fc" id="L19">        return rank;</span>
+
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        assert invariant();</span>
+
+<span class="fc" id="L38">        return rank;</span>
     }
 
     public Integer getNumericValue() {
-<span class="fc bfc" id="L23" title="All 3 branches covered.">        return switch (rank) {</span>
-<span class="fc" id="L24">            case &quot;J&quot;, &quot;Q&quot;, &quot;K&quot; -&gt; 10;</span>
-<span class="fc" id="L25">            case &quot;A&quot; -&gt; 11;</span>
-<span class="fc" id="L26">            default -&gt; Integer.parseInt(rank);</span>
+
+<span class="pc bpc" id="L43" title="1 of 2 branches missed.">        assert invariant();</span>
+
+<span class="fc bfc" id="L45" title="All 3 branches covered.">        Integer value = switch (rank) {</span>
+<span class="fc" id="L46">            case &quot;J&quot;, &quot;Q&quot;, &quot;K&quot; -&gt; 10;</span>
+<span class="fc" id="L47">            case &quot;A&quot; -&gt; 11;</span>
+<span class="fc" id="L48">            default -&gt; Integer.parseInt(rank);</span>
         };
+
+        //postcondicio
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">        assert value != null;</span>
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        assert invariant();</span>
+<span class="fc" id="L54">        return value;</span>
+
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
