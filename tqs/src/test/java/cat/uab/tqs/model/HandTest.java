@@ -29,7 +29,7 @@ public class HandTest {
     void testGetValue_Pairwise() {
         Hand hand;
 
-        // Pairwise testing sobre 3 factors:
+        // Pairwise testing (i LOOP TESTING) sobre 3 factors:
         // F1: nombre de asos (0, 1, +2)
         // F2: suma cartes NO asos (baixa, mitjana, alta)
         // F3: nombre de cartes (1-2, 3, +4)

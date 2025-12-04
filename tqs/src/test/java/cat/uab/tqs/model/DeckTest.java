@@ -26,6 +26,11 @@ public class DeckTest {
         // Cas 4: no conte cartes impossibles
         assertFalse(deck.contains(new Card("Joker", "5")));
         assertFalse(deck.contains(new Card("Diamonds", "15")));
+
+        // Cas 5: LOOP TESTING ANUINAT: no conte cartes duplicades
+
+        assertFalse(deck.hasDuplicateCards());
+
     }
 
     @Test
@@ -94,7 +99,7 @@ public class DeckTest {
         Deck deck1 = new Deck();
         Deck deck2 = new Deck();
 
-        // Cas: en baralles random  no haurien de coincidir
+        // LOOP TESTING ANIUAT: en baralles random  no haurien de coincidir
         boolean identical = true;
         for (int i = 0; i < deck1.size(); i++) {
             Card c1 = deck1.getCardAt(i);
