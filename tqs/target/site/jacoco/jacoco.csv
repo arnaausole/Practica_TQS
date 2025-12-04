@@ -1,6 +1,6 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 tqs,cat.uab.tqs.model,Dealer,38,81,10,16,0,21,10,9,0,6
-tqs,cat.uab.tqs.model,Card,34,72,10,13,0,21,10,8,0,6
+tqs,cat.uab.tqs.model,Card,26,80,8,15,0,21,8,10,0,6
 tqs,cat.uab.tqs.model,ShuffleRandom,0,6,0,0,0,3,0,2,0,2
 tqs,cat.uab.tqs.model,Hand,42,138,11,25,0,31,11,15,0,8
 tqs,cat.uab.tqs.model,Deck,167,398,43,75,18,60,39,35,3,12
