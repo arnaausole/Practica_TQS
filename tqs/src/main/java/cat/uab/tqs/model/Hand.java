@@ -7,15 +7,35 @@ public class Hand {
 
     private List<Card> cards = new ArrayList<>();
 
+    private boolean invariant() {
+        return cards != null;
+    }
+
     public void addCard(Card c) {
+
+        assert invariant();
+        //precond
+        assert c != null;
+
+        int oldSize = cards.size();
         cards.add(c);
+
+        // postcond
+        assert cards.size() == oldSize + 1;
+        assert cards.get(cards.size() - 1) == c;
+        assert invariant();
+
     }
 
     public List<Card> getCards() {
+        assert invariant();
         return cards;
     }
 
     public int getValue() {
+
+        assert invariant();
+
         int total = 0;
         int aces = 0;
 
@@ -33,16 +53,18 @@ public class Hand {
             total -= 10; // canvi 11 a 1
             aces--;
         }
-
+        assert invariant();
         return total;
     }
 
     public boolean isBlackjack() {
+        assert invariant();
         return cards.size() == 2 && getValue() == 21;
     }
 
 
     public boolean isBust() {
+        assert invariant();
         return getValue() > 21;
     }
 }
