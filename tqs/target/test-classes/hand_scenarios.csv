@@ -1,0 +1,11 @@
+cards;expectedValue;expectedBust;expectedBlackjack
+10 9;19;false;false
+10 5 7;22;true;false
+A K;21;false;true
+A 9 9;19;false;false
+A A 9;21;false;false
+A A 10 9;21;false;false
+7 7 7;21;false;false
+10 6;16;false;false
+10 6 6;22;true;false
+A 10 10;21;false;false

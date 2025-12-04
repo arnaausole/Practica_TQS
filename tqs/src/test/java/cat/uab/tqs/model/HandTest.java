@@ -213,10 +213,11 @@ public class HandTest {
 
     @ParameterizedTest(name = "Mà \"{0}\" → value={1}, bust={2}, blackjack={3}")
     @CsvFileSource(
-        resources = "/hand_scenarios.csv",
+        resources = "/cat/uab/tqs/resources/hand_scenarios.csv",
         numLinesToSkip = 1,
         delimiter = ';'
     )
+
     void testHandBehaviour_DataDriven(String cards, int expectedValue, boolean expectedBust, boolean expectedBlackjack) {
 
         Hand hand = new Hand();
