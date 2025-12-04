@@ -185,6 +185,7 @@ public class HandTest {
         assertFalse(hand.isBlackjack());
 
         // no es 21 ni te 2 cartes: false/false
+        
         hand = new Hand();
         hand.addCard(new Card("Hearts", "5"));
         hand.addCard(new Card("Clubs", "5"));
