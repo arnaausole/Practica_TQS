@@ -39,10 +39,30 @@ public class GameControllerTest {
         controller.startGame();
         int before = controller.getPlayer().getHand().getCards().size();
 
+        // Cas 1: Hit normal
         controller.playerHit();
 
         assertEquals(before + 1, controller.getPlayer().getHand().getCards().size());
         assertNotNull(view.lastShownCard);
+
+        // Cas 2: Si player fa blackjack natural, no pot fer hit
+
+        //reset
+        MockGameView view = new MockGameView();
+        GameController controller = new GameController(view, new Deck());
+
+        // blackjack natural (A + 10)
+        controller.getPlayer().getHand().addCard(new Card("Hearts", "A"));
+        controller.getPlayer().getHand().addCard(new Card("Clubs", "K"));
+        int beforeBJ = controller.getPlayer().getHand().getCards().size();  // = 2
+
+        controller.playerHit();
+
+        // no afegir cap carta nova
+        assertEquals(beforeBJ, controller.getPlayer().getHand().getCards().size());
+        // i no sha de cridar showCard
+        assertNull(view.lastShownCard);
+
     }
 
     @Test
@@ -144,6 +164,51 @@ public class GameControllerTest {
 
         controller.determineWinner();
         assertEquals("Tie.", view.lastMessage);
+
+
+        // casos especials: blackjack natural
+
+        // Cas 6: tots dos tenen blackjack --> empat
+        controller.startGame();
+        controller.getPlayer().reset();
+        controller.getDealer().reset();
+
+        controller.getPlayer().getHand().addCard(new Card("Hearts", "A"));
+        controller.getPlayer().getHand().addCard(new Card("Clubs", "K"));     // 21, 2 cartes
+
+        controller.getDealer().getHand().addCard(new Card("Spades", "A"));
+        controller.getDealer().getHand().addCard(new Card("Diamonds", "Q")); // 21, 2 cartes
+
+        controller.determineWinner();
+        assertEquals("Tie. Both have blackjack.", view.lastMessage);
+
+        // Cas 7: nomes el player te blackjack --> player guanya amb blackjack
+        controller.startGame();
+        controller.getPlayer().reset();
+        controller.getDealer().reset();
+
+        controller.getPlayer().getHand().addCard(new Card("Hearts", "A"));
+        controller.getPlayer().getHand().addCard(new Card("Clubs", "K"));   // blackjack
+
+        controller.getDealer().getHand().addCard(new Card("Spades", "9"));
+        controller.getDealer().getHand().addCard(new Card("Diamonds", "9"));// 18
+
+        controller.determineWinner();
+        assertEquals("Player wins with blackjack.", view.lastMessage);
+
+        // Cas 8: nomes el dealer te blackjack --> dealer guanya amb blackjack
+        controller.startGame();
+        controller.getPlayer().reset();
+        controller.getDealer().reset();
+
+        controller.getPlayer().getHand().addCard(new Card("Hearts", "9"));
+        controller.getPlayer().getHand().addCard(new Card("Clubs", "9"));   // 18
+
+        controller.getDealer().getHand().addCard(new Card("Spades", "A"));
+        controller.getDealer().getHand().addCard(new Card("Diamonds", "K")); // blackjack
+
+        controller.determineWinner();
+        assertEquals("Dealer wins with blackjack.", view.lastMessage);
     }
 
     
