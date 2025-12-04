@@ -32,7 +32,8 @@ public class Deck {
         if (cards.size() < 0 || cards.size() > 52) {
             return false;
         }
-        // totes les cartes dins del domini
+        // totes les cartes dins del domini --> aixo serveix per quan dealer/player fan addCart (es fa drawcard de la baralla)
+        // i aixi ens assegurem que siguin cartes vàlides a la hora de jugar
         for (Card c : cards) {
             if (c == null) {
                 return false;
