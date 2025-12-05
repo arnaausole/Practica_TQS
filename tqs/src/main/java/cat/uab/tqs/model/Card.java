@@ -6,6 +6,7 @@ public class Card {
     private String suit;
     private String rank;
 
+    // Invariant per aplicar DByC
     private boolean invariant() {
 
         return suit != null && rank != null;

@@ -3,6 +3,7 @@ package cat.uab.tqs.model;
 import java.util.ArrayList;
 import java.util.List;
 
+// Classe que representa la mà d'un jugador o del dealer
 public class Hand {
 
     private List<Card> cards = new ArrayList<>();

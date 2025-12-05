@@ -3,6 +3,8 @@ package cat.uab.tqs.model;
 import java.util.ArrayList;
 import java.util.List;
 
+// Aquesta classe representa la baralla de cartes sencera
+// La baralla es pot barrejar, es poden treure cartes i consultar el seu estat
 public class Deck {
 
     private List<Card> cards;

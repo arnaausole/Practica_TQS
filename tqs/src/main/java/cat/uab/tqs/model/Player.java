@@ -1,5 +1,6 @@
 package cat.uab.tqs.model;
 
+// Classe que representa un jugador del joc
 public class Player {
 
     private Hand hand; // baralla
