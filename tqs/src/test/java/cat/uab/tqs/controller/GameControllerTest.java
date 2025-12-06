@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import cat.uab.tqs.mocks.MockGameView;
+import cat.uab.tqs.mocks.MockDeck;
 import cat.uab.tqs.model.*;
 
 public class GameControllerTest {
@@ -40,6 +41,33 @@ public class GameControllerTest {
 
         // msg inicial correcte
         assertEquals("New game started. Your turn!", view.lastMessage);
+
+        // startGame amb MockDeck --> cartes deterministes
+        MockGameView view2 = new MockGameView();
+        MockDeck mockDeck = new MockDeck();
+
+        mockDeck.setCards(
+            // ordre: jugador1, dealer1, jugador2, dealer2
+            new Card("Hearts",   "A"),  // P1
+            new Card("Clubs",    "K"),  // D1
+            new Card("Spades",   "9"),  // P2
+            new Card("Diamonds", "8")   // D2
+        );
+
+        GameController controller2 = new GameController(view2, mockDeck);
+        controller2.startGame();
+
+        // comprovem que les cartes inicials venen del MockDeck
+        assertEquals("A", controller2.getPlayer().getHand().getCards().get(0).getRank());
+        assertEquals("Hearts", controller2.getPlayer().getHand().getCards().get(0).getSuit());
+
+        assertEquals("K", controller2.getDealer().getHand().getCards().get(0).getRank());
+        assertEquals("Clubs", controller2.getDealer().getHand().getCards().get(0).getSuit());
+
+        // el dealer segueix amagat i la vista sactualitza
+        assertTrue(view2.dealerHidden);
+        assertTrue(view2.lastPlayerScore > 0);
+        assertTrue(view2.lastDealerScore > 0);
     }
 
     @Test
@@ -74,6 +102,22 @@ public class GameControllerTest {
         assertEquals(beforeBJ, controller.getPlayer().getHand().getCards().size());
         // i no sha de cridar showCard
         assertNull(view.lastShownCard);
+
+        // Cas 3: Baralla buida
+
+        MockDeck mockDeck = new MockDeck();
+        
+        GameController controllerEmpty = new GameController(view, mockDeck);
+
+        // donem cartes al jugador manualment pq tingui punts i pugui demanar
+        controllerEmpty.getPlayer().getHand().addCard(new Card("Hearts", "2"));
+        controllerEmpty.getPlayer().getHand().addCard(new Card("Clubs", "3"));
+
+        controllerEmpty.playerHit();
+
+        // verifica que salta el missatge derror i la ma no canvia de mida
+        assertEquals("No more cards in the deck.", view.lastMessage);
+        assertEquals(2, controllerEmpty.getPlayer().getHand().getCards().size());
 
     }
 
