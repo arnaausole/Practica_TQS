@@ -77,6 +77,24 @@ public class Deck {
         assert invariant();
     }
 
+    public void setShuffler(Shuffler shuffler) {
+
+        // pre cond
+        assert invariant();
+        assert shuffler != null;
+
+        this.shuffler = shuffler;
+        this.shuffler.shuffle(cards);
+
+        assert invariant();
+    }
+
+    public Shuffler getShuffler() {
+
+        assert invariant();
+        return shuffler;
+    }
+
     public int size() {
         assert invariant();
 

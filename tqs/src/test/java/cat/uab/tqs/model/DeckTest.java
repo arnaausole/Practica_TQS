@@ -5,6 +5,9 @@ import cat.uab.tqs.mocks.MockShuffleRandom;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DeckTest {
 
     @Test
@@ -142,41 +145,46 @@ public class DeckTest {
 
     @Test
     void testLoopDuplicateCards() {
-        Deck deck = new Deck();
-        
-        // Cas 1: Llista buida (0 passades pel bucle extern)
-        deck.setCards(new ArrayList<>());
-        assertFalse(deck.hasDuplicateCards());
 
-        // Cas 2: Llista amb 1 element (1 passada extern, 0 passades intern)
+        // Caixa Blanca: Loop Testing Aniuat (0 iteracions del bucle extern)
+        Deck deck1 = new Deck();
+        List<Card> empty = new ArrayList<>();
+        deck1.setCards(empty);
+        assertFalse(deck1.hasDuplicateCards());
+
+        // Caixa Blanca: Loop Testing Aniuat (1 element → 1 iteració extern, 0 intern)
+        Deck deck2 = new Deck();
         List<Card> oneCard = new ArrayList<>();
         oneCard.add(new Card("Hearts", "A"));
-        deck.setCards(oneCard);
-        assertFalse(deck.hasDuplicateCards());
+        deck2.setCards(oneCard);
+        assertFalse(deck2.hasDuplicateCards());
 
-        // Cas 3: Llista sense duplicats (Cas típic, N passades)
+        // Caixa Blanca: Loop Testing Aniuat (N elements sense duplicats, recorre tots els parells)
+        Deck deck3 = new Deck();
         List<Card> noDupes = new ArrayList<>();
         noDupes.add(new Card("Hearts", "A"));
         noDupes.add(new Card("Clubs", "K"));
         noDupes.add(new Card("Spades", "5"));
-        deck.setCards(noDupes);
-        assertFalse(deck.hasDuplicateCards());
+        deck3.setCards(noDupes);
+        assertFalse(deck3.hasDuplicateCards());
 
-        // Cas 4: Duplicat al principi (Trobat a la primera iteració externa/interna)
+        // Caixa Blanca: Loop Testing Aniuat (duplicat detectat al principi → millor cas)
+        Deck deck4 = new Deck();
         List<Card> dupeStart = new ArrayList<>();
-        dupeStart.add(new Card("Hearts", "A")); // Duplicat
-        dupeStart.add(new Card("Hearts", "A")); // Duplicat
+        dupeStart.add(new Card("Hearts", "A")); // duplicat
+        dupeStart.add(new Card("Hearts", "A")); // duplicat
         dupeStart.add(new Card("Clubs", "K"));
-        deck.setCards(dupeStart);
-        assertTrue(deck.hasDuplicateCards());
+        deck4.setCards(dupeStart);
+        assertTrue(deck4.hasDuplicateCards());
 
-        // Cas 5: Duplicat al final (El pitjor cas, recorre tot fins al final)
+        // Caixa Blanca: Loop Testing Aniuat (duplicat al final → pitjor cas, recorre gairebé tota la llista)
+        Deck deck5 = new Deck();
         List<Card> dupeEnd = new ArrayList<>();
         dupeEnd.add(new Card("Hearts", "A"));
         dupeEnd.add(new Card("Clubs", "K"));
         dupeEnd.add(new Card("Spades", "5"));
-        dupeEnd.add(new Card("Spades", "5")); // Duplicat al final
-        deck.setCards(dupeEnd);
-        assertTrue(deck.hasDuplicateCards());
+        dupeEnd.add(new Card("Spades", "5")); // duplicat al final
+        deck5.setCards(dupeEnd);
+        assertTrue(deck5.hasDuplicateCards());
     }
 }
