@@ -212,7 +212,7 @@ public class GUIView implements GameView {
 <span class="nc" id="L212">        playerCardsPanel.removeAll();</span>
 <span class="nc bnc" id="L213" title="All 2 branches missed.">        for (Card c : controller.getPlayer().getHand().getCards()) {</span>
 <span class="nc" id="L214">            playerCardsPanel.add(createCardComponent(c));</span>
-        }
+<span class="nc" id="L215">        }</span>
 
         // DEALER
 <span class="nc" id="L218">        dealerCardsPanel.removeAll();</span>
@@ -225,10 +225,10 @@ public class GUIView implements GameView {
 <span class="nc bnc" id="L225" title="All 2 branches missed.">            for (int i = 1; i &lt; dealerHand.size(); i++) {</span>
 <span class="nc" id="L226">                dealerCardsPanel.add(createHiddenCardComponent());</span>
             }
-<span class="nc" id="L228">        } else {</span>
+        } else {
 <span class="nc bnc" id="L229" title="All 2 branches missed.">            for (Card c : dealerHand) {</span>
 <span class="nc" id="L230">                dealerCardsPanel.add(createCardComponent(c));</span>
-            }
+<span class="nc" id="L231">            }</span>
         }
 
 <span class="nc" id="L234">        playerCardsPanel.revalidate();</span>
@@ -253,7 +253,7 @@ public class GUIView implements GameView {
 
 <span class="nc bnc" id="L254" title="All 2 branches missed.">        if (dealerHidden) {</span>
 <span class="nc" id="L255">            dealerScore.setText(&quot;Score: ?&quot;);</span>
-<span class="nc" id="L256">        } else {</span>
+        } else {
 <span class="nc" id="L257">            dealerScore.setText(&quot;Score: &quot; + dealerValue);</span>
         }
 

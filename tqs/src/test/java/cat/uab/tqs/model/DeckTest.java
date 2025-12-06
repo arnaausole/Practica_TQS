@@ -35,6 +35,12 @@ public class DeckTest {
         assertThrows(AssertionError.class, () -> deck.getCardAt(-1));
         assertThrows(AssertionError.class, () -> deck.getCardAt(52));
 
+        // Caixa Blanca: Branch coverage (constructor no permet shuffler null)
+        assertThrows(AssertionError.class, () -> new Deck(null));
+
+        // Caixa Blanca: Branch coverage (setShuffler no permet null)
+        assertThrows(AssertionError.class, () -> deck.setShuffler(null));
+
 
     }
 
@@ -99,6 +105,17 @@ public class DeckTest {
 
         // Caixa Negra: Partició Equivalent (mida segueix la del mock)
         assertEquals(4, deck.size()); // El mock te 4 cartes per tests
+
+        // Caixa Negra: Partició Equivalent (getShuffler retorna actual)
+        assertEquals(mock, deck.getShuffler());
+
+        // Caixa Negra: Mock object (setShuffler reaplica ordre determinista)
+        MockShuffleRandom mock2 = new MockShuffleRandom();
+        deck.setShuffler(mock2);
+        assertEquals(mock2, deck.getShuffler());
+        assertEquals("Hearts", deck.getCardAt(0).getSuit());
+        assertEquals("A", deck.getCardAt(0).getRank());
+        assertEquals(4, deck.size()); // segueix la mida del mock
     }
 
     @Test

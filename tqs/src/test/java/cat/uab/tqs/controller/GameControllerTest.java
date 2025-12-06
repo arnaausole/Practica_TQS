@@ -142,6 +142,13 @@ public class GameControllerTest {
         assertNotNull(view2.lastShownCard);
         assertEquals("Hearts", view2.lastShownCard.getSuit());
         assertEquals("5",      view2.lastShownCard.getRank());
+
+        // Caixa Negra: Valor Límit/Frontera (player ja esta en stand --> hit no fa res)
+        controller.getPlayer().stand();
+        int deckBefore = deck.size();
+        controller.playerHit();
+        assertEquals(deckBefore, deck.size());
+        assertNull(view.lastShownCard);
     }
 
     @Test

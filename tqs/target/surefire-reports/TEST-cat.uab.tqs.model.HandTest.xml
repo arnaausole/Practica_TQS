@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="ES"/>
     <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/25/libexec/openjdk.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/target/surefire/surefirebooter-20251204132058353_3.jar /Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/target/surefire 2025-12-04T13-20-58_312-jvmRun1 surefire-20251204132058353_1tmp surefire_0-20251204132058353_2tmp"/>
+    <property name="sun.java.command" value="/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/target/surefire/surefirebooter-20251206193215483_3.jar /Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/target/surefire 2025-12-06T19-32-15_441-jvmRun1 surefire-20251206193215483_1tmp surefire_0-20251206193215483_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/target/test-classes:/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/target/classes:/Users/arnausole/.m2/repository/org/junit/jupiter/junit-jupiter/5.10.2/junit-jupiter-5.10.2.jar:/Users/arnausole/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.10.2/junit-jupiter-api-5.10.2.jar:/Users/arnausole/.m2/repository/org/opentest4j/opentest4j/1.3.0/opentest4j-1.3.0.jar:/Users/arnausole/.m2/repository/org/junit/platform/junit-platform-commons/1.10.2/junit-platform-commons-1.10.2.jar:/Users/arnausole/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/arnausole/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.10.2/junit-jupiter-params-5.10.2.jar:/Users/arnausole/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.10.2/junit-jupiter-engine-5.10.2.jar:/Users/arnausole/.m2/repository/org/junit/platform/junit-platform-engine/1.10.2/junit-platform-engine-1.10.2.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -28,7 +28,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="apple.awt.application.name" value="ForkedBooter"/>
-    <property name="surefire.real.class.path" value="/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/target/surefire/surefirebooter-20251204132058353_3.jar"/>
+    <property name="surefire.real.class.path" value="/Users/arnausole/Uni/TQS/PRACTICA 1/Practica_TQS/tqs/target/surefire/surefirebooter-20251206193215483_3.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="25"/>
     <property name="user.name" value="arnausole"/>
@@ -56,18 +56,18 @@
     <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
     <property name="java.class.version" value="69.0"/>
   </properties>
-  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[1]" classname="cat.uab.tqs.model.HandTest" time="0.011"/>
-  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[2]" classname="cat.uab.tqs.model.HandTest" time="0.0"/>
-  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[3]" classname="cat.uab.tqs.model.HandTest" time="0.001"/>
+  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[1]" classname="cat.uab.tqs.model.HandTest" time="0.01"/>
+  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[2]" classname="cat.uab.tqs.model.HandTest" time="0.001"/>
+  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[3]" classname="cat.uab.tqs.model.HandTest" time="0.0"/>
   <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[4]" classname="cat.uab.tqs.model.HandTest" time="0.0"/>
-  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[5]" classname="cat.uab.tqs.model.HandTest" time="0.0"/>
-  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[6]" classname="cat.uab.tqs.model.HandTest" time="0.001"/>
+  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[5]" classname="cat.uab.tqs.model.HandTest" time="0.001"/>
+  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[6]" classname="cat.uab.tqs.model.HandTest" time="0.0"/>
   <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[7]" classname="cat.uab.tqs.model.HandTest" time="0.0"/>
-  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[8]" classname="cat.uab.tqs.model.HandTest" time="0.0"/>
-  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[9]" classname="cat.uab.tqs.model.HandTest" time="0.0"/>
-  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[10]" classname="cat.uab.tqs.model.HandTest" time="0.001"/>
+  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[8]" classname="cat.uab.tqs.model.HandTest" time="0.001"/>
+  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[9]" classname="cat.uab.tqs.model.HandTest" time="0.001"/>
+  <testcase name="testHandBehaviour_DataDriven(String, int, boolean, boolean)[10]" classname="cat.uab.tqs.model.HandTest" time="0.0"/>
   <testcase name="testAddCard" classname="cat.uab.tqs.model.HandTest" time="0.0"/>
-  <testcase name="testGetValue_Pairwise" classname="cat.uab.tqs.model.HandTest" time="0.001"/>
+  <testcase name="testGetValue_Pairwise" classname="cat.uab.tqs.model.HandTest" time="0.0"/>
   <testcase name="testIsBust" classname="cat.uab.tqs.model.HandTest" time="0.0"/>
   <testcase name="testIsBlackjack" classname="cat.uab.tqs.model.HandTest" time="0.0"/>
 </testsuite>

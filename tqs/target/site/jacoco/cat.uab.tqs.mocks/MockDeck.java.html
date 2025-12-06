@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MockDeck.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tqs</a> &gt; <a href="index.source.html" class="el_package">cat.uab.tqs.mocks</a> &gt; <span class="el_source">MockDeck.java</span></div><h1>MockDeck.java</h1><pre class="source lang-java linenums">package cat.uab.tqs.mocks;
+
+import cat.uab.tqs.model.Card;
+import cat.uab.tqs.model.Deck;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class MockDeck extends Deck {
+
+<span class="fc" id="L11">    private List&lt;Card&gt; forcedCards = new ArrayList&lt;&gt;();</span>
+
+    public MockDeck() {
+<span class="fc" id="L14">        super(); </span>
+        // El constructor Deck crea 52 cartes, pero nosaltres
+        // farem override dels metodes per ignorarles i fer servir la nostra llista
+<span class="fc" id="L17">    }</span>
+
+    // definim quines cartes sortiran i en quin ordre
+    public void setCards(Card... cards) {
+<span class="fc" id="L21">        this.forcedCards = new ArrayList&lt;&gt;(Arrays.asList(cards));</span>
+<span class="fc" id="L22">    }</span>
+
+    @Override
+    public Card drawCard() {
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (forcedCards.isEmpty()) {</span>
+<span class="fc" id="L27">            return null;</span>
+        }
+<span class="fc" id="L29">        return forcedCards.remove(0);</span>
+    }
+
+    @Override
+    public int size() {
+<span class="fc" id="L34">        return forcedCards.size();</span>
+    }
+
+    @Override
+    public boolean isEmpty() {
+<span class="fc" id="L39">        return forcedCards.isEmpty();</span>
+    }
+    
+    // fem override de shuffle pq no faci res i no trenqui el nostre ordre
+    @Override
+    public void shuffle() {
+        // res
+<span class="nc" id="L46">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -3,21 +3,22 @@
 import cat.uab.tqs.model.*;
 import java.util.List;
 
-<span class="fc" id="L6">public class MockShuffleRandom implements Shuffler {</span>
+// Classe que utilitza un ordre predefinit per a les cartes (mock)
+<span class="fc" id="L7">public class MockShuffleRandom implements Shuffler {</span>
 
-<span class="fc" id="L8">    List&lt;Card&gt; predefinedOrder = List.of(</span>
-<span class="fc" id="L9">        new Card(&quot;Hearts&quot;, &quot;A&quot;),</span>
-<span class="fc" id="L10">        new Card(&quot;Diamonds&quot;, &quot;K&quot;),</span>
-<span class="fc" id="L11">        new Card(&quot;Clubs&quot;, &quot;Q&quot;),</span>
-<span class="fc" id="L12">        new Card(&quot;Spades&quot;, &quot;J&quot;)</span>
+<span class="fc" id="L9">    private final List&lt;Card&gt; predefinedOrder = List.of(</span>
+        new Card(&quot;Hearts&quot;, &quot;A&quot;),
+        new Card(&quot;Diamonds&quot;, &quot;K&quot;),
+        new Card(&quot;Clubs&quot;, &quot;Q&quot;),
+        new Card(&quot;Spades&quot;, &quot;J&quot;)
         // afegirem mes per testejar si cal
     );
 
     @Override
     public void shuffle(List&lt;Card&gt; cards) {
-<span class="fc" id="L18">        cards.clear();</span>
-<span class="fc" id="L19">        cards.addAll(predefinedOrder);</span>
-<span class="fc" id="L20">    }</span>
+<span class="fc" id="L19">        cards.clear();</span>
+<span class="fc" id="L20">        cards.addAll(predefinedOrder);</span>
+<span class="fc" id="L21">    }</span>
 }
 
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
