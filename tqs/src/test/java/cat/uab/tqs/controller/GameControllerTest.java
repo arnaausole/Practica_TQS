@@ -28,21 +28,21 @@ public class GameControllerTest {
 
         controller.startGame();
 
-        // mides de les mans
+        // Caixa Negra: Partició Equivalent (mides inicials de les mans = 2 cartes)
         assertEquals(2, controller.getPlayer().getHand().getCards().size());
         assertEquals(2, controller.getDealer().getHand().getCards().size());
 
-        // scores > 0
+        // Caixa Negra: Partició Equivalent (scores inicials > 0)
         assertTrue(view.lastPlayerScore > 0);
         assertTrue(view.lastDealerScore > 0);
 
-        // el dealer ha de quedar amagat al començar la partida
+        // Caixa Negra: Regla de negoci (dealer ocult al començar)
         assertTrue(view.dealerHidden);
 
-        // msg inicial correcte
+        // Caixa Negra: Partició Equivalent (missatge inicial correcte)
         assertEquals("New game started. Your turn!", view.lastMessage);
 
-        // startGame amb MockDeck --> cartes deterministes
+        // Caixa Negra: Mock object (startGame amb MockDeck per cartes deterministes)
         MockGameView view2 = new MockGameView();
         MockDeck mockDeck = new MockDeck();
 
@@ -57,14 +57,14 @@ public class GameControllerTest {
         GameController controller2 = new GameController(view2, mockDeck);
         controller2.startGame();
 
-        // comprovem que les cartes inicials venen del MockDeck
+        // Caixa Negra: Verificació determinista (cartes inicials provenen del MockDeck)
         assertEquals("A", controller2.getPlayer().getHand().getCards().get(0).getRank());
         assertEquals("Hearts", controller2.getPlayer().getHand().getCards().get(0).getSuit());
 
         assertEquals("9", controller2.getDealer().getHand().getCards().get(0).getRank());
         assertEquals("Spades", controller2.getDealer().getHand().getCards().get(0).getSuit());
 
-        // el dealer segueix amagat i la vista sactualitza
+        // Caixa Negra: Regla de negoci (dealer segueix amagat) + integració vista actualitzada
         assertTrue(view2.dealerHidden);
         assertTrue(view2.lastPlayerScore > 0);
         assertTrue(view2.lastDealerScore > 0);
@@ -78,14 +78,14 @@ public class GameControllerTest {
 
         assertTrue(view.dealerHidden);
 
-        // Cas 1: Hit normal
+        // Caixa Negra: Partició Equivalent (hit normal afegeix 1 carta)
         controller.playerHit();
 
         assertEquals(before + 1, controller.getPlayer().getHand().getCards().size());
         assertNotNull(view.lastShownCard);
 
-        
-        // Cas 2: Si player fa blackjack natural, no pot fer hit
+
+        // Caixa Negra: Valor Límit/Frontera (blackjack natural impedeix més hits)
 
         //reset
         MockGameView view = new MockGameView();
@@ -103,7 +103,7 @@ public class GameControllerTest {
         // i no sha de cridar showCard
         assertNull(view.lastShownCard);
 
-        // Cas 3: Baralla buida
+        // Caixa Negra: Cas Extrem (baralla buida)
 
         MockDeck mockDeck = new MockDeck();
         
@@ -121,7 +121,7 @@ public class GameControllerTest {
 
         assertNull(view.lastShownCard);
 
-        // Cas 4: Hit amb MockDeck determinista
+        // Caixa Negra: Mock object (hit amb MockDeck determinista)
         MockGameView view2 = new MockGameView();
         MockDeck mockDeck2 = new MockDeck();
         mockDeck2.setCards(
@@ -149,18 +149,18 @@ public class GameControllerTest {
 
         controller.startGame();
 
-        // abans de plantarse, la carta del dealer ha destar oculta
+        // Caixa Negra: Regla de negoci (abans de plantarse la carta del dealer és oculta)
         assertTrue(view.dealerHidden);
 
-        // Cas 1: el jugador es planta
+        // Caixa Negra: Partició Equivalent (el jugador es planta)
 
         controller.playerStand();
         assertTrue(controller.getPlayer().isStanding());
 
-        // Cas 2: el dealer ha jugat i el seu valor és >= 17
+        // Caixa Negra: Regla de negoci (dealer juga fins arribar a >=17)
         assertTrue(controller.getDealer().getHand().getValue() >= 17);
 
-        //dps de plantarse la carta del dealer es descobreix
+        // Caixa Negra: Valor Límit/Frontera (després de plantar-se el dealer es descobreix)
         assertFalse(view.dealerHidden);
 
         assertTrue(view.lastPlayerScore > 0);
@@ -170,7 +170,7 @@ public class GameControllerTest {
     @Test
     void testDetermineWinner() {
 
-        // Decision + condition coverage + path coverage:
+        // Caixa Blanca: Decision/Condition/Path coverage de determineWinner():
         //
         //  boolean playerBJ = player.getHand().isBlackjack();
         //  boolean dealerBJ = dealer.getHand().isBlackjack();
@@ -184,11 +184,11 @@ public class GameControllerTest {
         //  else if (p < d)                     -> "Dealer wins."
         //  else                                -> "Tie."
         //
-        // Cobrim tots els camins amb 8 casos
+        // Cobrim tots els camins amb 8 casos de Caixa Negra
 
-        // valors limit/frontera
+        // Caixa Negra: Valors límit/frontera coberts en els casos següents
 
-        // Cas 1: Player busts --> Dealer guanya
+        // Caixa Negra: Partició Equivalent (player busts) --> Dealer guanya
 
         controller.startGame();
         controller.getPlayer().getHand().addCard(new Card("Hearts", "K"));
@@ -199,7 +199,7 @@ public class GameControllerTest {
         assertEquals("Dealer wins.", view.lastMessage);
 
 
-        // Cas 2: Dealer busts --> Player guanya
+        // Caixa Negra: Partició Equivalent (dealer busts) --> Player guanya
         controller.startGame();
         controller.getDealer().getHand().addCard(new Card("Hearts", "K"));
         controller.getDealer().getHand().addCard(new Card("Hearts", "Q"));
@@ -209,7 +209,7 @@ public class GameControllerTest {
         assertEquals("Player wins.", view.lastMessage);
 
 
-        // Cas 3: Player > Dealer --> Player guanya
+        // Caixa Negra: Partició Equivalent (player > dealer sense bust) --> Player guanya
 
         controller.startGame();
 
@@ -229,7 +229,7 @@ public class GameControllerTest {
         assertEquals("Player wins.", view.lastMessage);
 
 
-        // Cas 4: Dealer > Player --> Dealer guanya
+        // Caixa Negra: Partició Equivalent (dealer > player) --> Dealer guanya
 
         controller.startGame();
 
@@ -248,7 +248,7 @@ public class GameControllerTest {
 
 
     
-        // Cas 5: Empat
+        // Caixa Negra: Partició Equivalent (empats de puntuació) --> Tie.
 
         controller.startGame();
 
@@ -266,9 +266,9 @@ public class GameControllerTest {
         assertEquals("Tie.", view.lastMessage);
 
 
-        // casos especials: blackjack natural
+        // Casos especials: blackjack natural
 
-        // Cas 6: tots dos tenen blackjack --> empat
+        // Caixa Negra: Valor Límit/Frontera (tots dos blackjack natural) --> empat
         controller.startGame();
         controller.getPlayer().reset();
         controller.getDealer().reset();
@@ -282,7 +282,7 @@ public class GameControllerTest {
         controller.determineWinner();
         assertEquals("Tie. Both have blackjack.", view.lastMessage);
 
-        // Cas 7: nomes el player te blackjack --> player guanya amb blackjack
+        // Caixa Negra: Valor Límit/Frontera (només player té blackjack) --> player guanya
         controller.startGame();
         controller.getPlayer().reset();
         controller.getDealer().reset();
@@ -296,7 +296,7 @@ public class GameControllerTest {
         controller.determineWinner();
         assertEquals("Player wins with blackjack.", view.lastMessage);
 
-        // Cas 8: nomes el dealer te blackjack --> dealer guanya amb blackjack
+        // Caixa Negra: Valor Límit/Frontera (només dealer té blackjack) --> dealer guanya
         controller.startGame();
         controller.getPlayer().reset();
         controller.getDealer().reset();

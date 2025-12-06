@@ -7,14 +7,13 @@ import cat.uab.tqs.mocks.MockDeck;
 
 class DealerTest {
 
-    // El dealer roba cartes mentre tingui 16 o menys,
-    // quan arriba a 17 o mes ha de parar (segons regles oficials blackjack)
+    // Caixa Negra: Regla de negoci (dealer roba fins a 16, planta a 17 o més)
     @Test
     void testPlay() {
     
-        // DECISION COVERAGE + CONDITION COVERAGE +  PATH COVERAGE + LOOP TESTING + LIMITS
+        // Caixa Blanca: Decision/Condition/Path Coverage + Loop testing + valors límit
 
-        // Cas 1: Dealer amb 17 o mes --> no ha de robar cartes: false/true
+        // Caixa Negra: Valor Límit/Frontera (17 o més) - Dealer no roba: false/true
         Deck deck1 = new Deck();
         Dealer dealer1 = new Dealer();
 
@@ -26,7 +25,7 @@ class DealerTest {
         assertEquals(17, dealer1.getHand().getValue());
         assertEquals(initialSize1, deck1.size()); // no ha robat
 
-        // Cas 2: Dealer amb 16 --> ha de robar com a minim una carta: true/true
+        // Caixa Negra: Valor Límit/Frontera (16) - Dealer ha de robar com a mínim una carta: true/true
         Deck deck2 = new Deck();
         Dealer dealer2 = new Dealer();
 
@@ -39,7 +38,7 @@ class DealerTest {
         assertTrue(dealer2.getHand().getValue() >= 17);
         assertTrue(deck2.size() < sizeBefore2);  // ha robat
 
-        // Cas 3: Loop testing --> dealer té 3 cartes petites
+        // Caixa Negra: Loop Testing (valors baixos obliguen múltiples robades)
 
         Deck deck3 = new Deck();
         Dealer dealer3 = new Dealer();
@@ -54,9 +53,9 @@ class DealerTest {
         assertTrue(dealer3.getHand().getValue() >= 17);
         assertTrue(deck3.size() < sizeBefore3);  // ha robat diverses vegades
 
-        // Asos (particio equivalent + path coverage)
+        // Caixa Negra: Partició Equivalent amb Asos (també cobreix camins amb valors flexibles)
         
-        // Cas 4: Dealer té A + 5 --> pot ser 16 --> ha de robar
+        // Caixa Negra: Valor Límit/Frontera (A + 5 = 16) - Ha de robar
         Deck deck4 = new Deck();
         Dealer dealer4 = new Dealer();
 
@@ -69,7 +68,7 @@ class DealerTest {
         assertTrue(dealer4.getHand().getValue() >= 17);
         assertTrue(deck4.size() < sizeBefore4);
 
-        // Cas 5: Dealer té A + 6 --> 17 exacte --> no ha de robar: false/true
+        // Caixa Negra: Valor Límit/Frontera (Boundary Value) - Dealer planta amb 17 exacte: false/true
 
         Deck deck5 = new Deck();
         Dealer dealer5 = new Dealer();
@@ -83,7 +82,7 @@ class DealerTest {
         assertEquals(17, dealer5.getHand().getValue());
         assertEquals(sizeBefore5, deck5.size());  // no ha robat
 
-        // Cas 6: baralla buida --> no roba res ni canvia res: true/false
+        // Caixa Negra: Cas Extrems (baralla buida) - no roba res ni canvia res: true/false
 
         Deck emptyDeck = new Deck();
         Dealer dealer6 = new Dealer();
@@ -105,7 +104,7 @@ class DealerTest {
 
         // false/true ja cobert (cas 1 i 5)
 
-        // Cas 7: baralla buida pero >17 --> no roba res: false/true
+        // Caixa Negra: Cas Extrems (baralla buida + mà > 17) - no roba res: false/true
 
         Deck deck7 = new Deck();
         Dealer dealer7 = new Dealer();
@@ -124,9 +123,9 @@ class DealerTest {
         assertEquals(sizeBefore7, deck7.size()); // no roba
 
 
-        // MOCKDECK: tests deterministes
+        // Caixa Negra: Mock object per tests deterministes
 
-        // Cas 8: Dealer amb 16 roba una carta amb MockDeck
+        // Caixa Negra: Partició Equivalent (16) amb MockDeck - garanteix 1 robada
         MockDeck mockDeck8 = new MockDeck();
         mockDeck8.setCards(
             new Card("Spades", "2"),  // 1ra carta que ha de robar --> 10 + 6 = 18
@@ -143,7 +142,7 @@ class DealerTest {
         assertEquals(18, dealer8.getHand().getValue());           // 16 + 2
         assertEquals(sizeBefore8 - 1, mockDeck8.size());          // ha robat una carta
 
-        // Cas 9: Loop testing amb MockDeck --> diverses robades fins arribar a 17 i parar
+        // Caixa Negra: Loop Testing amb MockDeck (diverses robades fins assolir 17 i parar)
         MockDeck mockDeck9 = new MockDeck();
         mockDeck9.setCards(
             new Card("Spades",   "4"),  // 1ra --> 9 + 4 = 13

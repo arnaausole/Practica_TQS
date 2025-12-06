@@ -17,15 +17,15 @@ public class HandTest {
     void testAddCard() {
         Hand hand = new Hand();
 
-        // Cas 1: afegir 1 carta
+        // Caixa Negra: Partició Equivalent (afegir 1 carta incrementa mida)
         hand.addCard(new Card("Hearts", "10"));
         assertEquals(1, hand.getCards().size());
 
-        // Cas 2: afegir 2 cartes
+        // Caixa Negra: Partició Equivalent (afegir 2 cartes manté consistència)
         hand.addCard(new Card("Spades", "A"));
         assertEquals(2, hand.getCards().size());
 
-        // Cas 3: comprovar que les cartes són les que toca
+        // Caixa Negra: Partició Equivalent (ordre i valors correctes a la mà)
         assertEquals("10", hand.getCards().get(0).getRank());
         assertEquals("A", hand.getCards().get(1).getRank());
     }
@@ -34,24 +34,24 @@ public class HandTest {
     void testGetValue_Pairwise() {
         Hand hand;
 
-        // Pairwise testing (i LOOP TESTING) sobre 3 factors:
+        // Caixa Negra: Pairwise testing (i LOOP TESTING) sobre 3 factors:
         // F1: nombre de asos (0, 1, +2)
         // F2: suma cartes NO asos (baixa, mitjana, alta)
         // F3: nombre de cartes (1-2, 3, +4)
 
-        // CAS 1: 0 asos, baixa, 1-2
+        // Caixa Negra: Pairwise (0 asos, suma baixa, 1-2 cartes)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "5"));
         assertEquals(5, hand.getValue());
 
-        // CAS 2: 0 asos, mitjana, 3
+        // Caixa Negra: Pairwise (0 asos, suma mitjana, 3 cartes)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "10"));
         hand.addCard(new Card("Clubs", "9"));
         hand.addCard(new Card("Spades", "2"));
         assertEquals(21, hand.getValue());
 
-        // CAS 3: 0 asos, alta, 4+
+        // Caixa Negra: Pairwise (0 asos, suma alta, 4+ cartes)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "10"));
         hand.addCard(new Card("Clubs", "10"));
@@ -59,20 +59,20 @@ public class HandTest {
         hand.addCard(new Card("Spades", "2"));
         assertEquals(27, hand.getValue());
 
-        // CAS 4: 1 as, baixa, 1-2
+        // Caixa Negra: Pairwise (1 as, suma baixa, 1-2 cartes)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "A"));
         hand.addCard(new Card("Clubs", "5"));
         assertEquals(16, hand.getValue());
 
-        // CAS 5: 1 as, mitjana, 3
+        // Caixa Negra: Pairwise (1 as, suma mitjana, 3 cartes)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "A"));
         hand.addCard(new Card("Clubs", "9"));
         hand.addCard(new Card("Spades", "9"));
         assertEquals(19, hand.getValue());
 
-        // CAS 6: 1 as, alta, 4+
+        // Caixa Negra: Pairwise (1 as, suma alta, 4+ cartes)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "A"));
         hand.addCard(new Card("Spades", "K"));
@@ -80,14 +80,14 @@ public class HandTest {
         hand.addCard(new Card("Diamonds", "J"));
         assertEquals(31, hand.getValue());
 
-        // CAS 7: 2+ asos, baixa, 3
+        // Caixa Negra: Pairwise (>=2 asos, suma baixa, 3 cartes)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "A"));
         hand.addCard(new Card("Clubs", "A"));
         hand.addCard(new Card("Spades", "9"));
         assertEquals(21, hand.getValue());
 
-        // CAS 8: 2+ asos, mitjana, 4+
+        // Caixa Negra: Pairwise (>=2 asos, suma mitjana, 4+ cartes)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "A"));
         hand.addCard(new Card("Clubs", "A"));
@@ -95,40 +95,40 @@ public class HandTest {
         hand.addCard(new Card("Diamonds", "9"));
         assertEquals(21, hand.getValue());
 
-        // CAS 9: 2+ asos, alta, 1-2
+        // Caixa Negra: Pairwise (>=2 asos, suma alta, 1-2 cartes)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "A"));
         hand.addCard(new Card("Clubs", "A"));
         hand.addCard(new Card("Spades", "K"));
         assertEquals(12, hand.getValue());
 
-        // Cas extra: mà buida
+        // Caixa Negra: Valor Extrem (mà buida retorna 0)
         hand = new Hand();
         assertEquals(0, hand.getValue());
 
-        // Decision Coverage: Cobrir el while (total > 21 && aces > 0)
+        // Caixa Blanca: Decision Coverage sobre el while (total > 21 && aces > 0)
 
-        // Cas 1: el while no entra (total ≤ 21)
+        // Caixa Blanca: Rama sense entrar (total ≤ 21, no ajusta asos)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "A"));  
         hand.addCard(new Card("Clubs", "5")); // = 16
         assertEquals(16, hand.getValue());
 
-        // Cas 2: el while entra (total > 21 amb as)
+        // Caixa Blanca: Rama entrant (total > 21 amb as, ajusta valor)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "A"));
         hand.addCard(new Card("Clubs", "K"));
         hand.addCard(new Card("Spades", "9"));  // = 30 --> ajusta = 20
         assertEquals(20, hand.getValue());
 
-        // Condition Coverage --> cobrir if(c.getRank().equals("A"))
+        // Caixa Blanca: Condition Coverage sobre if(c.getRank().equals("A"))
 
-        // Cas 1: true (es un as)
+        // Caixa Blanca: Condició true (carta és As)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "A")); // true
         assertEquals(11, hand.getValue());
 
-        // Cas 2: false (no es un as)
+        // Caixa Blanca: Condició false (carta no és As)
         hand = new Hand();
         hand.addCard(new Card("Clubs", "9")); // false
         assertEquals(9, hand.getValue());
@@ -138,23 +138,23 @@ public class HandTest {
     void testIsBust() {
         Hand hand = new Hand();
 
-        // Cas < 21
+        // Caixa Negra: Partició Equivalent (valor dins del rang normal sense Bust)
         hand.addCard(new Card("Hearts", "10"));
         hand.addCard(new Card("Clubs", "9"));
         assertFalse(hand.isBust());  // 19
 
-        // Cas > 21 (bust)
+        // Caixa Negra: Partició Equivalent (valor excedeix 21 → Bust)
         hand.addCard(new Card("Spades", "5"));
         assertTrue(hand.isBust());   // 24
 
-        // As baixa per evitar bust
+        // Caixa Negra: Valor Límit/Frontera (As ajustat evita Bust)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "A"));
         hand.addCard(new Card("Clubs", "9"));
         hand.addCard(new Card("Spades", "9"));
         assertFalse(hand.isBust());  // 19
 
-        // Cas exacte 21
+        // Caixa Negra: Valor Límit/Frontera (exactament 21)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "10"));
         hand.addCard(new Card("Clubs", "A"));
@@ -165,31 +165,31 @@ public class HandTest {
     void testIsBlackjack() {
         Hand hand = new Hand();
 
-        //condition coverage
+        // Caixa Blanca: Condition Coverage sobre (size == 2 && value == 21)
 
-        // Cas blackjack natural: true/true
+        // Caixa Negra: Cas Base (blackjack natural → true/true)
         hand.addCard(new Card("Hearts", "A"));
         hand.addCard(new Card("Spades", "K"));
         assertTrue(hand.isBlackjack());
 
-        // 2 cartes però no 21: true/false
+        // Caixa Negra: Partició Equivalent (2 cartes però valor < 21 → true/false)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "10"));
         hand.addCard(new Card("Clubs", "9"));
         assertFalse(hand.isBlackjack());
 
-        // Més de 2 cartes: false/true
+        // Caixa Negra: Partició Equivalent (valor 21 amb >2 cartes → false/true)
         hand.addCard(new Card("Clubs", "2"));
         assertFalse(hand.isBlackjack());
 
-        // 21 amb 3 cartes: false/true
+        // Caixa Negra: Valor Límit amb 3 cartes (no compte com blackjack)
         hand = new Hand();
         hand.addCard(new Card("Hearts", "7"));
         hand.addCard(new Card("Clubs", "7"));
         hand.addCard(new Card("Spades", "7"));
         assertFalse(hand.isBlackjack());
 
-        // no es 21 ni te 2 cartes: false/false
+        // Caixa Negra: Partició Equivalent (no és 21 ni 2 cartes → false/false)
         
         hand = new Hand();
         hand.addCard(new Card("Hearts", "5"));

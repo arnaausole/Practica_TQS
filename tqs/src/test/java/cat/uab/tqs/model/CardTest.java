@@ -9,19 +9,19 @@ class CardTest {
     void testConstructor() {
         Card card = new Card("Hearts", "A");
 
-        // Cas 1: els getters retornen el valor correcte
+        // Caixa Negra: Partició Equivalent (getters retornen el valor correcte)
         assertEquals("Hearts", card.getSuit());
         assertEquals("A", card.getRank());
 
-        // Cas 2: més proves de consistència
+        // Caixa Negra: Partició Equivalent (coherència amb altres valors)
         Card card2 = new Card("Clubs", "10");
         assertEquals("Clubs", card2.getSuit());
         assertEquals("10", card2.getRank());
 
-        // particio invalida (suit null)
+        // Caixa Negra: Partició No Vàlida (suit null)
         assertThrows(AssertionError.class, () -> new Card(null, "A"));
 
-        //particio invalida (rank null)
+        // Caixa Negra: Partició No Vàlida (rank null)
         assertThrows(AssertionError.class, () -> new Card("Hearts", null));
 
 
@@ -31,17 +31,17 @@ class CardTest {
     @Test
     void testGetNumericValue() {
 
-        // Cas 1: Cartes numèriques
+        // Caixa Negra: Partició Equivalent (cartes numèriques)
         assertEquals(2,  new Card("Hearts", "2").getNumericValue());
         assertEquals(9,  new Card("Clubs", "9").getNumericValue());
         assertEquals(10, new Card("Diamonds", "10").getNumericValue());
 
-        // Cas 2: Figures (J, Q, K)
+        // Caixa Negra: Partició Equivalent (figures J/Q/K)
         assertEquals(10, new Card("Clubs", "J").getNumericValue());
         assertEquals(10, new Card("Spades", "Q").getNumericValue());
         assertEquals(10, new Card("Hearts", "K").getNumericValue());
 
-        // Cas 3: As (valor inicial = 11)
+        // Caixa Negra: Valor Límit/Frontera (As pren 11 inicialment)
         assertEquals(11, new Card("Hearts", "A").getNumericValue());
     }
 }

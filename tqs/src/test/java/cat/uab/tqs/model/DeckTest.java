@@ -12,26 +12,26 @@ public class DeckTest {
 
         Deck deck = new Deck();
 
-        // Cas 1: mida correcta
+        // Caixa Negra: Partició Equivalent (mida correcta)
         assertEquals(52, deck.size());
 
-        // Cas 2: no ha destar buida
+        // Caixa Negra: Partició Equivalent (baralla no buida)
         assertFalse(deck.isEmpty());
 
-        // Cas 3: conte cartes vàlides
+        // Caixa Negra: Partició Equivalent (cartes vàlides existeixen)
         assertTrue(deck.contains(new Card("Hearts", "A")));
         assertTrue(deck.contains(new Card("Clubs", "10")));
         assertTrue(deck.contains(new Card("Spades", "2")));
 
-        // Cas 4: no conte cartes impossibles
+        // Caixa Negra: Partició No Vàlida (no conté cartes impossibles)
         assertFalse(deck.contains(new Card("Joker", "5")));
         assertFalse(deck.contains(new Card("Diamonds", "15")));
 
-        // Cas 5: LOOP TESTING ANUINAT: no conte cartes duplicades
+        // Caixa Blanca: Loop Testing Aniuat (no conté cartes duplicades)
 
         assertFalse(deck.hasDuplicateCards());
 
-        // Cas 6: getCardAt fora de rang
+        // Caixa Negra: Valor Límit/Frontera (getCardAt fora de rang)
         assertThrows(AssertionError.class, () -> deck.getCardAt(-1));
         assertThrows(AssertionError.class, () -> deck.getCardAt(52));
 
@@ -43,13 +43,13 @@ public class DeckTest {
 
         Deck deck = new Deck();
 
-        // Cas 1: mai null
+        // Caixa Negra: Partició Equivalent (llista de cartes mai és null)
         assertNotNull(deck.getCards());
 
-        // Cas 2: mida correcta
+        // Caixa Negra: Partició Equivalent (mida inicial correcta)
         assertEquals(52, deck.getCards().size());
 
-        // Cas 3: carta vàlida
+        // Caixa Negra: Partició Equivalent (carta vàlida té rank i suit)
         Card first = deck.getCardAt(0);
         Card last  = deck.getCardAt(deck.size() - 1);
         assertNotNull(first.getRank());
@@ -57,7 +57,7 @@ public class DeckTest {
         assertNotNull(last.getRank());
         assertNotNull(last.getSuit());
 
-        // Cas 4: carta null
+        // Caixa Negra: Partició No Vàlida (contains amb carta null)
         assertThrows(AssertionError.class, () -> deck.contains(null));
     }
 
@@ -67,17 +67,17 @@ public class DeckTest {
         Deck deck = new Deck();
         int initialSize = deck.size();
 
-        // Cas 1: retorna carta
+        // Caixa Negra: Partició Equivalent (draw retorna carta)
         Card c = deck.drawCard();
         assertNotNull(c);
 
-        // Cas 2: mida disminueix
+        // Caixa Negra: Partició Equivalent (mida disminueix en 1)
         assertEquals(initialSize - 1, deck.size());
 
-        // Cas 3: carta robada ja no hi és
+        // Caixa Negra: Partició Equivalent (carta robada ja no hi és)
         assertFalse(deck.contains(c));
 
-        // Cas 4: quan es buida --> null
+        // Caixa Negra: Valor Límit/Frontera (draw amb baralla buida retorna null)
         Deck empty = new Deck(new MockShuffleRandom());
         while (!empty.isEmpty())
             empty.drawCard();
@@ -92,12 +92,12 @@ public class DeckTest {
         MockShuffleRandom mock = new MockShuffleRandom();
         Deck deck = new Deck(mock);
 
-        // Cas 1: la primera carta es exactament la del mock
+        // Caixa Negra: Mock object (ordre controlat, primera carta del mock)
         Card first = deck.getCardAt(0);
         assertEquals("Hearts", first.getSuit());
         assertEquals("A", first.getRank());
 
-        // Cas 2: mida continua sent 52 o mida del mock
+        // Caixa Negra: Partició Equivalent (mida segueix la del mock)
         assertEquals(4, deck.size()); // El mock te 4 cartes per tests
     }
 
@@ -107,7 +107,7 @@ public class DeckTest {
         Deck deck1 = new Deck();
         Deck deck2 = new Deck();
 
-        // LOOP TESTING ANIUAT: en baralles random  no haurien de coincidir
+        // Caixa Blanca: Loop Testing Aniuat (barreja aleatòria no ha de coincidir)
         boolean identical = true;
         for (int i = 0; i < deck1.size(); i++) {
             Card c1 = deck1.getCardAt(i);
