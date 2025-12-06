@@ -89,7 +89,7 @@ public class DeckTest {
     @Test
     void testShuffleWithMock() {
 
-        MockShuffleRandom mock = new MockShuffleRandom();
+        Shuffler mock = new MockShuffleRandom();
         Deck deck = new Deck(mock);
 
         // Caixa Negra: Mock object (ordre controlat, primera carta del mock)

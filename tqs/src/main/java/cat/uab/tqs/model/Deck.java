@@ -163,23 +163,6 @@ public class Deck {
 
     }
 
-    public Shuffler getShuffler() {
-
-        assert invariant();
-        return shuffler;
-    }
-
-    public void setShuffler(Shuffler shuffler) {
-
-        assert invariant();
-        assert shuffler != null;
-
-        this.shuffler = shuffler;
-        this.shuffler.shuffle(cards);
-
-        assert invariant();
-    }
-
     // Loop aniuat: comprova si hi ha alguna carta duplicada a la baralla
     public boolean hasDuplicateCards() {
         
