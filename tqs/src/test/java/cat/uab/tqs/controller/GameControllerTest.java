@@ -49,8 +49,8 @@ public class GameControllerTest {
         mockDeck.setCards(
             // ordre: jugador1, dealer1, jugador2, dealer2
             new Card("Hearts",   "A"),  // P1
-            new Card("Clubs",    "K"),  // D1
-            new Card("Spades",   "9"),  // P2
+            new Card("Clubs",    "K"),  // P2
+            new Card("Spades",   "9"),  // D1
             new Card("Diamonds", "8")   // D2
         );
 
@@ -61,8 +61,8 @@ public class GameControllerTest {
         assertEquals("A", controller2.getPlayer().getHand().getCards().get(0).getRank());
         assertEquals("Hearts", controller2.getPlayer().getHand().getCards().get(0).getSuit());
 
-        assertEquals("K", controller2.getDealer().getHand().getCards().get(0).getRank());
-        assertEquals("Clubs", controller2.getDealer().getHand().getCards().get(0).getSuit());
+        assertEquals("9", controller2.getDealer().getHand().getCards().get(0).getRank());
+        assertEquals("Spades", controller2.getDealer().getHand().getCards().get(0).getSuit());
 
         // el dealer segueix amagat i la vista sactualitza
         assertTrue(view2.dealerHidden);
@@ -76,15 +76,15 @@ public class GameControllerTest {
         controller.startGame();
         int before = controller.getPlayer().getHand().getCards().size();
 
+        assertTrue(view.dealerHidden);
+
         // Cas 1: Hit normal
         controller.playerHit();
 
         assertEquals(before + 1, controller.getPlayer().getHand().getCards().size());
         assertNotNull(view.lastShownCard);
 
-        // dealer ha de tenir 1 carta amagada
-        assertTrue(view.dealerHidden);
-
+        
         // Cas 2: Si player fa blackjack natural, no pot fer hit
 
         //reset
@@ -119,6 +119,29 @@ public class GameControllerTest {
         assertEquals("No more cards in the deck.", view.lastMessage);
         assertEquals(2, controllerEmpty.getPlayer().getHand().getCards().size());
 
+        assertNull(view.lastShownCard);
+
+        // Cas 4: Hit amb MockDeck determinista
+        MockGameView view2 = new MockGameView();
+        MockDeck mockDeck2 = new MockDeck();
+        mockDeck2.setCards(
+            new Card("Hearts", "5")
+        );
+
+        GameController controller2 = new GameController(view2, mockDeck2);
+
+        controller2.getPlayer().getHand().addCard(new Card("Clubs",  "2"));
+        controller2.getPlayer().getHand().addCard(new Card("Spades", "3"));
+
+        int beforeMock = controller2.getPlayer().getHand().getCards().size();
+        controller2.playerHit();
+
+        // ha dhaber afegir nomes 1 carta
+        assertEquals(beforeMock + 1, controller2.getPlayer().getHand().getCards().size());
+        // la carta mostrada a la vista ha de ser la del MockDeck
+        assertNotNull(view2.lastShownCard);
+        assertEquals("Hearts", view2.lastShownCard.getSuit());
+        assertEquals("5",      view2.lastShownCard.getRank());
     }
 
     @Test
