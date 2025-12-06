@@ -68,4 +68,21 @@ public class Hand {
         assert invariant();
         return getValue() > 21;
     }
+
+    public boolean hasPair() {
+        assert invariant();
+
+        for (int i = 0; i < cards.size(); i++) {
+            for (int j = i + 1; j < cards.size(); j++) {
+                // Comparem els ranks (ex: K == K)
+                if (cards.get(i).getRank().equals(cards.get(j).getRank())) {
+                    assert invariant();
+                    return true;
+                }
+            }
+        }
+
+        assert invariant();
+        return false;
+    }
 }
