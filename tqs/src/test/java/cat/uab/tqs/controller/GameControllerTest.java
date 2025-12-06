@@ -168,6 +168,43 @@ public class GameControllerTest {
     }
 
     @Test
+    void testActionsWhenAlreadyStanding() {
+        controller.startGame();
+        int initialSize = controller.getPlayer().getHand().getCards().size();
+
+        // 1. Forcem que el jugador es planti (Stand)
+        controller.playerStand();
+        
+        // Caixa Negra: Verificació d'estat (standing)
+        assertTrue(controller.getPlayer().isStanding());
+        
+        // Caixa Blanca: Path Coverage. 
+        // Forcem l'entrada al 'if (player.isStanding())' que fa el return immediat.
+        controller.playerHit();
+
+        // Caixa Negra: Invariant/Regla de negoci. 
+        // La mà no ha de canviar de mida perquè estem plantats.
+        assertEquals(initialSize, controller.getPlayer().getHand().getCards().size());
+
+        
+        // Caixa Blanca: Branch Coverage.
+        // Cridem playerStand() una segona vegada consecutiva per entrar al guard clause.
+        
+        // Netegem l'últim missatge del Mock per assegurar que no hi ha canvis
+        view.lastMessage = ""; 
+        
+        controller.playerStand();
+
+        // Caixa Negra: Verificació d'estat i integritat.
+        // L'estat segueix sent standing i no s'ha produït cap error ni missatge nou inesperat.
+        assertTrue(controller.getPlayer().isStanding());
+        
+        // Si la lògica funciona, el 'return' s'executa abans de tornar a calcular guanyadors o moure el dealer.
+        // Per tant, el missatge no hauria d'haver canviat (o hauria de ser buit si el mock ho permet).
+        assertEquals("", view.lastMessage); 
+    }
+
+    @Test
     void testDetermineWinner() {
 
         // Caixa Blanca: Decision/Condition/Path coverage de determineWinner():
