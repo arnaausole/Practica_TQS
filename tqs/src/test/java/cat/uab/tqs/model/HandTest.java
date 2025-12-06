@@ -237,27 +237,32 @@ public class HandTest {
         assertEquals(expectedBlackjack, hand.isBlackjack(), "Blackjack inesperat per a la mà " + cards);
     }
 
-    // LOOP TESTING: BUCLE SIMPLE A getValue()
     @Test
-    void testGetValue_LoopTesting() {
+    void testHasPair_LoopTesting() {
         Hand hand = new Hand();
-        
-        // Caixa Blanca: Loop Testing (0 vegades)
-        // La mà està buida. El bucle 'for' no s'executa.
-        assertEquals(0, hand.getValue(), 
-            "Caixa Blanca (Loop 0): Mà buida ha de valdre 0.");
 
-        // Caixa Blanca: Loop Testing (1 vegada)
-        // El bucle 'for' s'executa exactament una vegada.
-        hand.addCard(new Card("Hearts", "5"));
-        assertEquals(5, hand.getValue(), 
-            "Caixa Blanca (Loop 1): Una carta executa el bucle 1 vegada.");
+        // Caixa Blanca: Loop Testing Aniuat (0 iteracions del bucle extern → mà buida)
+        assertFalse(hand.hasPair());
 
-        // Caixa Blanca: Loop Testing (2+ vegades)
-        // El bucle 'for' s'executa múltiples vegades.
-        hand.addCard(new Card("Clubs", "10")); 
-        hand.addCard(new Card("Spades", "2")); 
-        assertEquals(17, hand.getValue(), 
-            "Caixa Blanca (Loop 2+): Múltiples cartes executen el bucle diverses vegades.");
+        // Caixa Blanca: Loop Testing Aniuat (1 carta → 1 iteració extern, 0 intern)
+        hand.addCard(new Card("Hearts", "A"));
+        assertFalse(hand.hasPair());
+
+        // Caixa Blanca: Loop Testing Aniuat (2 cartes diferents → recorre parell sense trobar parella)
+        hand.addCard(new Card("Clubs", "K"));
+        assertFalse(hand.hasPair());
+
+        // Caixa Blanca: Loop Testing Aniuat (parella trobada al final → pitjor cas en aquesta mà)
+        hand.addCard(new Card("Diamonds", "K")); // mà: A, K, K
+        assertTrue(hand.hasPair());
+
+        // Caixa Blanca: Loop Testing Aniuat (parella trobada al principi → millor cas)
+        Hand hand2 = new Hand();
+        hand2.addCard(new Card("Hearts", "5"));
+        hand2.addCard(new Card("Clubs",  "5"));
+        hand2.addCard(new Card("Spades", "2"));
+        assertTrue(hand2.hasPair());
     }
+
+
 }
