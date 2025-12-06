@@ -37,6 +37,9 @@ public class PlayerTest {
         p.stand();
         p.hit(new Card("Diamonds", "9"));
         assertEquals(3, p.getHand().getCards().size());
+
+        // Cas 4: no permet cartes null
+        assertThrows(AssertionError.class, () -> p.hit(null));
     }
 
     @Test
@@ -73,6 +76,12 @@ public class PlayerTest {
         // Cas 2: dps de reset pot tornar a robar cartes
         p.hit(new Card("Diamonds", "4"));
         assertEquals(1, p.getHand().getCards().size());
+        assertFalse(p.isStanding());
+
+        // Cas 3: reset es idempotent (cridarho varias vegades no trenca res)
+        p.reset();
+        p.reset();
+        assertEquals(0, p.getHand().getCards().size());
         assertFalse(p.isStanding());
     }
 }
