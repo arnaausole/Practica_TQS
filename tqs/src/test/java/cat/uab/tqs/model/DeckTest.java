@@ -122,4 +122,44 @@ public class DeckTest {
 
         assertFalse(identical);
     }
+
+    @Test
+    void testLoopDuplicateCards() {
+        Deck deck = new Deck();
+        
+        // Cas 1: Llista buida (0 passades pel bucle extern)
+        deck.setCards(new ArrayList<>());
+        assertFalse(deck.hasDuplicateCards());
+
+        // Cas 2: Llista amb 1 element (1 passada extern, 0 passades intern)
+        List<Card> oneCard = new ArrayList<>();
+        oneCard.add(new Card("Hearts", "A"));
+        deck.setCards(oneCard);
+        assertFalse(deck.hasDuplicateCards());
+
+        // Cas 3: Llista sense duplicats (Cas típic, N passades)
+        List<Card> noDupes = new ArrayList<>();
+        noDupes.add(new Card("Hearts", "A"));
+        noDupes.add(new Card("Clubs", "K"));
+        noDupes.add(new Card("Spades", "5"));
+        deck.setCards(noDupes);
+        assertFalse(deck.hasDuplicateCards());
+
+        // Cas 4: Duplicat al principi (Trobat a la primera iteració externa/interna)
+        List<Card> dupeStart = new ArrayList<>();
+        dupeStart.add(new Card("Hearts", "A")); // Duplicat
+        dupeStart.add(new Card("Hearts", "A")); // Duplicat
+        dupeStart.add(new Card("Clubs", "K"));
+        deck.setCards(dupeStart);
+        assertTrue(deck.hasDuplicateCards());
+
+        // Cas 5: Duplicat al final (El pitjor cas, recorre tot fins al final)
+        List<Card> dupeEnd = new ArrayList<>();
+        dupeEnd.add(new Card("Hearts", "A"));
+        dupeEnd.add(new Card("Clubs", "K"));
+        dupeEnd.add(new Card("Spades", "5"));
+        dupeEnd.add(new Card("Spades", "5")); // Duplicat al final
+        deck.setCards(dupeEnd);
+        assertTrue(deck.hasDuplicateCards());
+    }
 }
