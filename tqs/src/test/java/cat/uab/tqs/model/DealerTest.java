@@ -2,10 +2,10 @@ package cat.uab.tqs.model;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import cat.uab.tqs.mocks.MockDeck;
+
 
 class DealerTest {
-
-
 
     // El dealer roba cartes mentre tingui 16 o menys,
     // quan arriba a 17 o mes ha de parar (segons regles oficials blackjack)
@@ -122,6 +122,44 @@ class DealerTest {
 
         assertEquals(15, dealer7.getHand().getValue());
         assertEquals(sizeBefore7, deck7.size()); // no roba
+
+
+        // MOCKDECK: tests deterministes
+
+        // Cas 8: Dealer amb 16 roba una carta amb MockDeck
+        MockDeck mockDeck8 = new MockDeck();
+        mockDeck8.setCards(
+            new Card("Spades", "2"),  // 1ra carta que ha de robar --> 10 + 6 = 18
+            new Card("Clubs",  "10")  // 2na carta (no ha de robar)
+        );
+
+        Dealer dealer8 = new Dealer();
+        dealer8.getHand().addCard(new Card("Hearts", "10"));
+        dealer8.getHand().addCard(new Card("Clubs",  "6"));  // total = 16
+
+        int sizeBefore8 = mockDeck8.size();
+        dealer8.play(mockDeck8);
+
+        assertEquals(18, dealer8.getHand().getValue());           // 16 + 2
+        assertEquals(sizeBefore8 - 1, mockDeck8.size());          // ha robat una carta
+
+        // Cas 9: Loop testing amb MockDeck --> diverses robades fins arribar a 17 i parar
+        MockDeck mockDeck9 = new MockDeck();
+        mockDeck9.setCards(
+            new Card("Spades",   "4"),  // 1ra --> 9 + 4 = 13
+            new Card("Diamonds", "4"),  // 2na --> 13 + 4 = 17
+            new Card("Clubs",    "4")   // 3ra (no hauria de robar)
+        );
+
+        Dealer dealer9 = new Dealer();
+        dealer9.getHand().addCard(new Card("Hearts", "9"));  // 9
+
+        int sizeBefore9 = mockDeck9.size();
+        dealer9.play(mockDeck9);
+
+        assertEquals(17, dealer9.getHand().getValue()); // 9 + 4 + 4 = 17
+        assertEquals(sizeBefore9 - 2, mockDeck9.size()); 
+
     }
     
 }

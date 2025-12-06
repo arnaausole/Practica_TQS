@@ -31,6 +31,11 @@ public class DeckTest {
 
         assertFalse(deck.hasDuplicateCards());
 
+        // Cas 6: getCardAt fora de rang
+        assertThrows(AssertionError.class, () -> deck.getCardAt(-1));
+        assertThrows(AssertionError.class, () -> deck.getCardAt(52));
+
+
     }
 
     @Test
@@ -51,6 +56,9 @@ public class DeckTest {
         assertNotNull(first.getSuit());
         assertNotNull(last.getRank());
         assertNotNull(last.getSuit());
+
+        // Cas 4: carta null
+        assertThrows(AssertionError.class, () -> deck.contains(null));
     }
 
     @Test
