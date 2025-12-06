@@ -15,6 +15,11 @@ public class GameController {
         return view != null && deck != null && player != null && dealer != null;
     }
 
+    public GameController(GameView view) {
+
+        this(view, new Deck());
+    }
+
     public GameController(GameView view, Deck deck) {
 
         //precond
@@ -49,7 +54,8 @@ public class GameController {
 
         player.reset();
         dealer.reset();
-        deck = new Deck();
+
+        //deck = new Deck();
 
         //precond: per començar el joc be
         assert player.getHand().getCards().isEmpty();
