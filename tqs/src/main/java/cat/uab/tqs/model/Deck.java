@@ -185,5 +185,9 @@ public class Deck {
         return false;
     }
 
-
+    // Mètode helper per a testing
+    // Ens permet injectar escenaris específics per al Loop Testing
+    void setCards(List<Card> newCards) {
+        this.cards = newCards;
+    }
 }
